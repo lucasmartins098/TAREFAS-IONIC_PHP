@@ -23,7 +23,7 @@ if (isset($_SERVER['HTTP_ORIGIN'])) {
    $data    = array();
 
    try {
-      $stmt 	= $pdo->query('SELECT id, nome FROM usuario ORDER BY nome ASC');
+      $stmt 	= $pdo->query('SELECT idTarefa, nome, descricao, favorito, data, horario, IdUsuario FROM tarefa ORDER BY nome ASC');
       while($row  = $stmt->fetch(PDO::FETCH_OBJ))
       {
          //$i = 0;

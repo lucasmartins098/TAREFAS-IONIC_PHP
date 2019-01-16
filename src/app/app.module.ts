@@ -12,6 +12,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { LoginPageModule } from '../pages/login/login.module';
 import { HttpModule } from '@angular/http';
+import { CadastroTarefaPage } from '../pages/cadastro-tarefa/cadastro-tarefa';
 
 @NgModule({
   declarations: [
@@ -19,13 +20,14 @@ import { HttpModule } from '@angular/http';
     AboutPage,
     ContactPage,
     HomePage,
+    CadastroTarefaPage,
     TabsPage
   ],
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
     HttpModule,
-    LoginPageModule
+    LoginPageModule,
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -33,6 +35,7 @@ import { HttpModule } from '@angular/http';
     AboutPage,
     ContactPage,
     HomePage,
+    CadastroTarefaPage,
     TabsPage
   ],
   providers: [

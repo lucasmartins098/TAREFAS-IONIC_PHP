@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
-import { IonicPage } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
 import { HttpHeaders } from '@angular/common/http';
 import { Http } from '@angular/http';
+import { CadastroTarefaPage } from '../cadastro-tarefa/cadastro-tarefa';
+import { TabsPage } from '../tabs/tabs';
 
 /**
  * Generated class for the LoginPage page.
@@ -25,7 +27,10 @@ export class LoginPage {
   private data: any = {};
   public itens: Array<any> = [];
 
-  constructor(public http: Http) {
+  constructor(public navCtrl: NavController,
+    public navParams: NavParams,
+    public toastCtrl: ToastController, 
+    public http: Http) {
     console.log('kdsjkjd');
   }
 
@@ -62,6 +67,8 @@ export class LoginPage {
           this.itens = JSON.parse(data._body);
           console.log("itens");
           console.log(this.itens);
+          //this.navCtrl.push(CadastroTarefaPage);
+          this.navCtrl.setRoot(TabsPage);
           // console.log(this.itens.length);
           // for (let i = 0; i <= this.itens.length; i++) {
           //    console.log(this.itens[i]);
@@ -69,6 +76,7 @@ export class LoginPage {
         }
         else{
           console.log("Usuário não existe!");
+          this.sendNotification("Usuário não existe!");
           //Fazer mensagem de usuário não existe!!
         }
       },
@@ -76,5 +84,13 @@ export class LoginPage {
           console.log("ALGO ERRADO");
         });
   }
+
+  sendNotification(message: string): void {
+    let notification = this.toastCtrl.create({
+       message: message,
+       duration: 3000
+    });
+    notification.present();
+ }
 
 }

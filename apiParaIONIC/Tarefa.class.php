@@ -1,18 +1,24 @@
 <?php
 	require_once("conexao.class.php");
+	require_once("Usuario.class.php");
 	session_start();
-	if($_SESSION['logado'] == true){
-	class Usuario extends Conexao{
+	// if(!isset($_SESSION)) 
+    // { 
+        // session_start(); 
+	    // } 
+	//$idUsuarioTarefa = $_SESSION['IdUsuario'];
+	//$logado = $_SESSION['logado'];
+	class Tarefa extends Conexao{
 
 		private $nome;
 		private $idTarefa;
 		private $descricao;
 		private $favorito;
 		private $idUsuario;
-		private $dataInicio;
-		private $dataFim;
-	
-	public function getNome(){
+		private $data;
+		private $horario;
+		
+			public function getNome(){
 		return $this->nome;
 	}
 
@@ -36,14 +42,6 @@
 		$this->descricao = $descricao;
 	}
 
-	public function getIdUsuario(){
-		return $this->idUsuario;
-	}
-
-	public function setIdUsuario($idUsuario){
-		$this->idUsuario = $idUsuario;
-	}
-
 	public function getFavorito(){
 		return $this->favorito;
 	}
@@ -52,22 +50,29 @@
 		$this->favorito = $favorito;
 	}
 
-	public function getDataInicio(){
-		return $this->dataInicio;
+	public function getIdUsuario(){
+		return $this->idUsuario;
 	}
 
-	public function setDataInicio($dataInicio){
-		$this->dataInicio = $dataInicio;
+	public function setIdUsuario($idUsuario){
+		$this->idUsuario = $idUsuario;
 	}
 
-	public function getDataFim(){
-		return $this->dataFim;
+	public function getData(){
+		return $this->data;
 	}
 
-	public function setDataFim($dataFim){
-		$this->dataFim = $dataFim;
+	public function setData($data){
+		$this->data = $data;
 	}
-	
+
+	public function getHorario(){
+		return $this->horario;
+	}
+
+	public function setHorario($horario){
+		$this->horario = $horario;
+	}
 	
     public function cadastrarTarefa(){
       try{
@@ -82,17 +87,23 @@
               //}
               //else
                 //{
-				$idUsuario = $_SESSION['IdUsuario'];
-                $stmt2 = $pdo->prepare("INSERT INTO tarefa(nome, descricao, favorito, dataInicio, dataFim, IdUsuario) VALUES(?,?,?,?,?)");
+			//if($logado = true){
+				//$this->setIdUsuario($_SESSION['IdUsuario']);
+                $stmt2 = $pdo->prepare("INSERT INTO tarefa(nome, descricao, favorito, data, horario, IdUsuario_Tarefa) VALUES(?,?,?,?,?,?)");
                 $stmt2->bindValue(1, $this->getNome());
 				$stmt2->bindValue(2, $this->getDescricao());
 				$stmt2->bindValue(3, $this->getFavorito());
-				$stmt2->bindValue(4, $this->getDataInicio());
-				$stmt2->bindValue(5, $this->getDataFim());
-				$stmt2->bindValue(5, $idUsuario );
+				$stmt2->bindValue(4, $this->getData());
+				$stmt2->bindValue(5, $this->getHorario());
+				$stmt2->bindValue(6, 1);
+				//$stmt2->bindValue(6, $this->getIdUsuario());
                 $stmt2->execute();
                 echo "tarefa inserida com sucesso";
-                //} 
+			// }
+			// else{
+				 // echo "Você precisa está logado no APP";
+				// }
+				//} 
           }//fim do try
                 catch(PDOException $e)
                 {
@@ -100,8 +111,6 @@
                 }
         }
 
-		
-			
 		public function deletarTarefa()
        {
         try
@@ -124,7 +133,7 @@
         try
         {
           $pdo = parent::getDB();
-          $query = $pdo->prepare("UPDATE Usuario SET nome = ? WHERE id = ?");
+          $query = $pdo->prepare("UPDATE tarefa SET nome = ? WHERE id = ?");
           $query->bindParam(1, $nome);
           $query->bindParam(2, $idUsuario);
           $query->execute();
@@ -137,67 +146,67 @@
           }
        }
 
-      public function listarUsuario()
-      {
-          try 
-          {
-            $data = array();
-            $pdo = parent::getDB();
-            $query = $pdo->prepare("SELECT id, nome FROM Usuario ORDER BY nome ASC");
-              while($row  = $query->fetch(PDO::FETCH_OBJ))
-              {
-                $data[] = $row;
-              }
-              echo json_encode($data);
-          }
-            catch(PDOException $e)
-            {
-                echo $e->getMessage();
-            }
-      }
+      // public function listarUsuario()
+      // {
+          // try 
+          // {
+            // $data = array();
+            // $pdo = parent::getDB();
+            // $query = $pdo->prepare("SELECT id, nome FROM Usuario ORDER BY nome ASC");
+              // while($row  = $query->fetch(PDO::FETCH_OBJ))
+              // {
+                // $data[] = $row;
+              // }
+              // echo json_encode($data);
+          // }
+            // catch(PDOException $e)
+            // {
+                // echo $e->getMessage();
+            // }
+      // }
 
-	  public function logar(){
-		try 
-          {
-		$pdo = parent::getDB();
+	  // public function logar(){
+		// try 
+          // {
+		// $pdo = parent::getDB();
 
-		$logar = $pdo->prepare("SELECT nome,login,IdUsuario,token FROM usuario WHERE login = ? AND senha = ?");
-		$logar->bindValue(1, $this->getLogin());
-		$logar->bindValue(2, $this->getSenha());
-		$logar->execute();
-		if ($logar->rowCount() == 1){
-			$retorno = array();
-			$dados = $logar->fetch(PDO::FETCH_OBJ);
-			$login_Cri = base64_encode($this->getLogin());
-			$rand = uniqid();
-			$token = $login_Cri.$rand;
-			//$_SESSION['nome'] = $dados->admnistrador_nome;
-			//$_SESSION['logado'] = true;
-			//$_SESSION['nivel'] = $dados->nivel;
-			$IdUsuario = $dados->IdUsuario;
-			$this->setIdUsuario($IdUsuario);
-			$nomeUsuario = $dados->nome;
-			$this->setNome($nomeUsuario);
-			$stmt = $pdo->prepare("UPDATE usuario set token = ? where IdUsuario = ?");
-			$stmt->bindValue(1, $token);
-			$stmt->bindValue(2, $this->getIdUsuario());
-			$stmt->execute();
-			  //echo '{"nome":"Jason Jones", "idade":38, "sexo": "M"}';
-			  $this->setlogado(true);
-			  $_SESSION['logado'] = true;
-			  echo '{"Login": "'.$this->getLogin().'", "Token":"'. $token.'", "Nome":"'.$this->getLogin().'", "IdUsuario":"'.$this->getIdUsuario().'"}';
-		}
-		else
-		{
-			echo 0;
-		}
-	}
-	catch(PDOException $e)
-	{
-		echo $e->getMessage();
-	}
+		// $logar = $pdo->prepare("SELECT nome,login,IdUsuario,token FROM usuario WHERE login = ? AND senha = ?");
+		// $logar->bindValue(1, $this->getLogin());
+		// $logar->bindValue(2, $this->getSenha());
+		// $logar->execute();
+		// if ($logar->rowCount() == 1){
+			// $retorno = array();
+			// $dados = $logar->fetch(PDO::FETCH_OBJ);
+			// $login_Cri = base64_encode($this->getLogin());
+			// $rand = uniqid();
+			// $token = $login_Cri.$rand;
+			// //$_SESSION['nome'] = $dados->admnistrador_nome;
+			// //$_SESSION['logado'] = true;
+			// //$_SESSION['nivel'] = $dados->nivel;
+			// $IdUsuario = $dados->IdUsuario;
+			// $this->setIdUsuario($IdUsuario);
+			// $nomeUsuario = $dados->nome;
+			// $this->setNome($nomeUsuario);
+			// $stmt = $pdo->prepare("UPDATE usuario set token = ? where IdUsuario = ?");
+			// $stmt->bindValue(1, $token);
+			// $stmt->bindValue(2, $this->getIdUsuario());
+			// $stmt->execute();
+			  // //echo '{"nome":"Jason Jones", "idade":38, "sexo": "M"}';
+			  // $this->setlogado(true);
+			  // $_SESSION['logado'] = true;
+			  // echo '{"Login": "'.$this->getLogin().'", "Token":"'. $token.'", "Nome":"'.$this->getLogin().'", "IdUsuario":"'.$this->getIdUsuario().'"}';
+		// }
+		// else
+		// {
+			// echo 0;
+		// }
+	// }
+	// catch(PDOException $e)
+	// {
+		// echo $e->getMessage();
+	// }
 
-	}
+	// }
 	  
       //   public function logar(){
       //       $pdo = parent::getDB();
@@ -265,9 +274,7 @@
 		//   }		
 		// }
 		
-    }
+    
 		}
-		else{
-			echo "Você precisa está logado";
-		}
+		
 ?>

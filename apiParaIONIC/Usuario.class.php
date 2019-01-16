@@ -1,6 +1,6 @@
 <?php
 	require_once("conexao.class.php");
-	session_start();
+	
 	class Usuario extends Conexao{
 
 		private $nome;
@@ -151,7 +151,9 @@
 			  $this->setlogado(true);
 			  $_SESSION['logado'] = true;
 			  $_SESSION['IdUsuario'] = $this->getIdUsuario();
-			  echo '{"Login": "'.$this->getLogin().'", "Token":"'. $token.'", "Nome":"'.$this->getLogin().'", "IdUsuario":"'.$this->getIdUsuario().'"}';
+			  echo '{"Login": "'.$this->getLogin().'", "Token":"'. $token.'", "Nome":"'.$this->getLogin().'", "IdUsuario":"'.$this->getIdUsuario().'", "Session":"'.$_SESSION['IdUsuario'].'", "Session2":"'.$_SESSION['logado'].'"}';
+		session_destroy();
+		session_start();
 		}
 		else
 		{

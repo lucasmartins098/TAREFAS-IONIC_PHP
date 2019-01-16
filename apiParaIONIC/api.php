@@ -1,6 +1,7 @@
 <?php
     require_once('Usuario.class.php');
-
+	require_once('Tarefa.class.php');
+	
     //http://stackoverflow.com/questions/18382740/cors-not-working-php
     if (isset($_SERVER['HTTP_ORIGIN'])) {
         header("Access-Control-Allow-Origin: {$_SERVER['HTTP_ORIGIN']}");
@@ -31,7 +32,8 @@
 
         $request = json_decode($postdata);
         $usuario = new Usuario;
-
+		$tarefa = new Tarefa;
+		
         $key = strip_tags($obj->key);
         switch($key)
          {
@@ -60,6 +62,14 @@
 		 break;
          CASE "listar":
          $usuario->listarUsuario();
+         break;
+		 CASE "cadastrarTarefa":
+		 $tarefa->setNome($obj->nome);
+		 $tarefa->setDescricao($obj->descricao);
+		 $tarefa->setFavorito($obj->favorito);
+		 $tarefa->setHorario($obj->horario);
+         $tarefa->setData($obj->data);
+		 $tarefa->cadastrarTarefa();
          break;
 		 CASE "logar":
          $usuario->setLogin($obj->login);

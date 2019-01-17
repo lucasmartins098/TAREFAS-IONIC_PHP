@@ -16,7 +16,7 @@
 <ion-content padding>
 
   <ion-item>
-    <ion-label>Cucumber</ion-label>
+    <ion-label>Favorito</ion-label>
     <ion-checkbox [(ngModel)]="dado.favorito"></ion-checkbox>
   </ion-item>
   <ion-label>Nome da tarefa</ion-label>
@@ -33,7 +33,7 @@
   </ion-item>
   <ion-label>Dia</ion-label>
   <ion-item>
-    <ion-datetime displayFormat="MMM DD YYYY" pickerFormat="MMM DD YYYY" [(ngModel)]="event.month"></ion-datetime>
+    <ion-datetime displayFormat="YYYY MMM DD" pickerFormat="YYYY MMM DD" [(ngModel)]="event.month"></ion-datetime>
   </ion-item>
   <button ion-button color="secondary" block (click)="cadastrarTarefa()">
     Adicionar

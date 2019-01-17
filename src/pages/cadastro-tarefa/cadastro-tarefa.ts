@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
 import { Http } from '@angular/http';
 import { HttpHeaders } from '@angular/common/http';
+import { TabsPage } from '../tabs/tabs';
 
 /**
  * Generated class for the CadastroTarefaPage page.
@@ -17,18 +18,27 @@ import { HttpHeaders } from '@angular/common/http';
 })
 export class CadastroTarefaPage {
 
-  private dado: any = { nome: "", descricao: "", data: "", horario: "", favorito: "" };
-  private baseURL = "http://localhost/apiParaIONIC/api.php/";
-  public itens: Array<any> = [];
+  public idUsuario:any;
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
     public toastCtrl: ToastController,
-    public http: Http) {
+    public http: Http
+    ) {
+     
+      // tabs:TabsPage
+      //this.idUsuario = TabsPage.idUsuario;
   }
+
+  public dado: any = { nome: "", descricao: "", data: "", horario: "", favorito: true, idUsuario : this.navParams.get('idUsuario')};
+  private baseURL = "http://localhost/apiParaIONIC/api.php/";
+  public itens: Array<any> = [];
+
+ 
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad CadastroTarefaPage');
+    console.log(this.dado.idUsuario);
   }
  
 
@@ -47,17 +57,17 @@ export class CadastroTarefaPage {
   cadastrarTarefa() {
     let headers: any = new HttpHeaders({ 'Content-Type': 'application/json' }),
       options: any = {
-        "key": "cadastrarTarefa", "nome": this.dado.nome, "descricao": this.dado.descricao, data: this.dado.data,
-        horario: this.dado.horario, favorito: this.dado.favorito
+        "key": "cadastrarTarefa", "nome": this.dado.nome, "descricao": this.dado.descricao, "data": this.event.month,
+        "horario": this.event.timeStarts, "favorito": this.dado.favorito, "idUsuario" : this.dado.idUsuario 
       },
-      url: any = this.baseURL;
+    url: any = this.baseURL;
     console.log("Passou pela função");
     console.log("FAVORITO");
     console.log(this.dado.favorito);
     console.log("FAVORITO");
     console.log(this.dado.descricao);
-    console.log(this.event.month);
-    console.log(this.event.timeStarts);
+    console.log("Data: "+this.event.month);
+    console.log("Horário: " + this.event.timeStarts);
     this.http.post(url, JSON.stringify(options), headers)
       .subscribe((data: any) => {
         //this.data.response = data["_body"];
@@ -66,9 +76,9 @@ export class CadastroTarefaPage {
         console.dir(data);
         const retorno = data._body;
         console.log(retorno);
-        this.itens = JSON.parse(data._body);
-        console.log("itens");
-        console.log(this.itens);
+        //this.itens = JSON.parse(data._body);
+        //console.log("itens");
+        console.log(retorno);
         // console.log(this.itens.length);
         // for (let i = 0; i <= this.itens.length; i++) {
         //    console.log(this.itens[i]);

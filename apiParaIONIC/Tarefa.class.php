@@ -18,7 +18,7 @@
 		private $data;
 		private $horario;
 		
-			public function getNome(){
+	public function getNome(){
 		return $this->nome;
 	}
 
@@ -77,33 +77,18 @@
     public function cadastrarTarefa(){
       try{
           $pdo = parent::getDB();
-          // $query = $pdo->prepare("select * from tarefa where nome = ?");
-          // $query->bindValue(1, $nome);	
-          // $query->execute();
-        
-            // if($query->rowCount() >= 1)
-              // {
-              // echo "Usuario já existe!";
-              //}
-              //else
-                //{
-			//if($logado = true){
-				//$this->setIdUsuario($_SESSION['IdUsuario']);
+         
                 $stmt2 = $pdo->prepare("INSERT INTO tarefa(nome, descricao, favorito, data, horario, IdUsuario_Tarefa) VALUES(?,?,?,?,?,?)");
                 $stmt2->bindValue(1, $this->getNome());
 				$stmt2->bindValue(2, $this->getDescricao());
 				$stmt2->bindValue(3, $this->getFavorito());
 				$stmt2->bindValue(4, $this->getData());
 				$stmt2->bindValue(5, $this->getHorario());
-				$stmt2->bindValue(6, 1);
-				//$stmt2->bindValue(6, $this->getIdUsuario());
+				//$stmt2->bindValue(6, 1);
+				$stmt2->bindValue(6, $this->getIdUsuario());
                 $stmt2->execute();
                 echo "tarefa inserida com sucesso";
-			// }
-			// else{
-				 // echo "Você precisa está logado no APP";
-				// }
-				//} 
+			
           }//fim do try
                 catch(PDOException $e)
                 {
@@ -145,25 +130,55 @@
               echo $e->getMessage();
           }
        }
+	   
+	   public function listarTarefas()
+      {
+          try 
+          {
+            $data = array();
+            $pdo = parent::getdb();
+			$idUsuario = $this->getIdUsuario();
+				  $stmt = $pdo->prepare('SELECT idTarefa, nome, descricao, horario, data FROM tarefa WHERE IdUsuario_tarefa = ? ORDER BY data ASC');
+				  //$stmt->execute(['id' => 1]);
+				  $stmt->bindParam(1,$idUsuario);
+				  $stmt->execute();
+				  while($row  = $stmt->fetch(PDO::FETCH_OBJ))
+				  {
+					 //$i = 0;
+					 $data[] = $row;
+					 // Retorna um dado em formato JSON
+				  //$i++;
+				  }
+				  //return json_encode($data);
 
-      // public function listarUsuario()
-      // {
-          // try 
-          // {
-            // $data = array();
-            // $pdo = parent::getDB();
-            // $query = $pdo->prepare("SELECT id, nome FROM Usuario ORDER BY nome ASC");
-              // while($row  = $query->fetch(PDO::FETCH_OBJ))
-              // {
-                // $data[] = $row;
-              // }
-              // echo json_encode($data);
-          // }
-            // catch(PDOException $e)
-            // {
-                // echo $e->getMessage();
-            // }
-      // }
+				  // Retorna um dado em formato JSON
+				  echo json_encode($data);
+			   
+          }
+            catch(pdoexception $e)
+            {
+                echo $e->getmessage();
+            }
+      }
+	   
+      // // // // // // // public function listarusuario()
+      // // // // // // // {
+          // // // // // // // try 
+          // // // // // // // {
+            // // // // // // // $data = array();
+            // // // // // // // $pdo = parent::getdb();
+            // // // // // // // $query = $pdo->prepare("select id, nome from usuario order by nome asc");
+              // // // // // // // while($row  = $query->fetch(pdo::fetch_obj))
+              // // // // // // // {
+                // // // // // // // $data[] = $row;
+              // // // // // // // }
+              // // // // // // // echo json_encode($data);
+          // // // // // // // }
+            // // // // // // // catch(pdoexception $e)
+            // // // // // // // {
+                // // // // // // // echo $e->getmessage();
+            // // // // // // // }
+      // // // // // // // }
 
 	  // public function logar(){
 		// try 

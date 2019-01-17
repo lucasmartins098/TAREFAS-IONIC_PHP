@@ -13,6 +13,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { LoginPageModule } from '../pages/login/login.module';
 import { HttpModule } from '@angular/http';
 import { CadastroTarefaPage } from '../pages/cadastro-tarefa/cadastro-tarefa';
+import { CadastroTarefaPageModule } from '../pages/cadastro-tarefa/cadastro-tarefa.module';
+import { TarefasPage } from '../pages/tarefas/tarefas';
 
 @NgModule({
   declarations: [
@@ -21,13 +23,15 @@ import { CadastroTarefaPage } from '../pages/cadastro-tarefa/cadastro-tarefa';
     ContactPage,
     HomePage,
     CadastroTarefaPage,
+    TarefasPage,
     TabsPage
   ],
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
     HttpModule,
-    LoginPageModule,
+    LoginPageModule
+   // CadastroTarefaPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -36,6 +40,7 @@ import { CadastroTarefaPage } from '../pages/cadastro-tarefa/cadastro-tarefa';
     ContactPage,
     HomePage,
     CadastroTarefaPage,
+    TarefasPage,
     TabsPage
   ],
   providers: [

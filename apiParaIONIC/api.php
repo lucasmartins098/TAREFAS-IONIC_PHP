@@ -69,7 +69,13 @@
 		 $tarefa->setFavorito($obj->favorito);
 		 $tarefa->setHorario($obj->horario);
          $tarefa->setData($obj->data);
+		 $tarefa->setIdUsuario($obj->idUsuario);
 		 $tarefa->cadastrarTarefa();
+         break;
+		 CASE "listarTarefas":
+		 //echo "IdUsuario: //////".$obj->idUsuario."//////////////";
+		 $tarefa->setIdUsuario($obj->idUsuario);
+         $tarefa->listarTarefas();
          break;
 		 CASE "logar":
          $usuario->setLogin($obj->login);

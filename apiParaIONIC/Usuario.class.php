@@ -126,32 +126,23 @@
           {
 		$pdo = parent::getDB();
 
-		$logar = $pdo->prepare("SELECT nome,login,IdUsuario,token FROM usuario WHERE login = ? AND senha = ?");
+		$logar = $pdo->prepare("SELECT nome,login,IdUsuario FROM usuario WHERE login = ? AND senha = ?");
 		$logar->bindValue(1, $this->getLogin());
 		$logar->bindValue(2, $this->getSenha());
 		$logar->execute();
 		if ($logar->rowCount() == 1){
 			$retorno = array();
 			$dados = $logar->fetch(PDO::FETCH_OBJ);
-			$login_Cri = base64_encode($this->getLogin());
-			$rand = uniqid();
-			$token = $login_Cri.$rand;
-			//$_SESSION['nome'] = $dados->admnistrador_nome;
-			//$_SESSION['logado'] = true;
-			//$_SESSION['nivel'] = $dados->nivel;
-			$IdUsuario = $dados->IdUsuario;
-			$this->setIdUsuario($IdUsuario);
-			$nomeUsuario = $dados->nome;
-			$this->setNome($nomeUsuario);
-			$stmt = $pdo->prepare("UPDATE usuario set token = ? where IdUsuario = ?");
-			$stmt->bindValue(1, $token);
-			$stmt->bindValue(2, $this->getIdUsuario());
-			$stmt->execute();
-			  //echo '{"nome":"Jason Jones", "idade":38, "sexo": "M"}';
+			$this->setNome($dados->nome);
+			$this->setIdUsuario($dados->IdUsuario);			
+			$login = $this->getLogin();
+			$senha = $this->getSenha();
+			$gerar = '{"login": "'.$this->getLogin().'", "senha":"'.$this->getSenha().'"}';
+			$token = base64_encode($gerar);
 			  $this->setlogado(true);
 			  $_SESSION['logado'] = true;
 			  $_SESSION['IdUsuario'] = $this->getIdUsuario();
-			  echo '{"Login": "'.$this->getLogin().'", "Token":"'. $token.'", "Nome":"'.$this->getLogin().'", "IdUsuario":"'.$this->getIdUsuario().'", "Session":"'.$_SESSION['IdUsuario'].'", "Session2":"'.$_SESSION['logado'].'"}';
+			  echo '{"login": "'.$this->getLogin().'", "token":"'. $token.'", "nome":"'.$this->getNome().'", "idUsuario":"'.$this->getIdUsuario().'"}';
 		session_destroy();
 		session_start();
 		}

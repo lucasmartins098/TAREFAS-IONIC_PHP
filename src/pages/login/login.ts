@@ -24,7 +24,7 @@ export class LoginPage {
     , senha: ""
   };
   private baseURL: string = "http://localhost/apiParaIONIC/api.php/";
-  private data: any = {};
+  private data: any = {nome : "", login : "", token : "", idUsuario : ""};
   public itens: Array<any> = [];
 
   constructor(public navCtrl: NavController,
@@ -67,8 +67,16 @@ export class LoginPage {
           this.itens = JSON.parse(data._body);
           console.log("itens");
           console.log(this.itens);
+          console.log(this.itens["nome"]);
+          console.log(this.itens["token"]);
+          console.log(this.itens["idUsuario"]);
+          this.data.nome = this.itens["nome"];
+          this.data.token = this.itens["token"];
+          this.data.idUsuario = this.itens["idUsuario"];
           //this.navCtrl.push(CadastroTarefaPage);
-          this.navCtrl.setRoot(TabsPage);
+          //this.navCtrl.push(CadastroTarefaPage, { id: this.itens });
+          //this.navParams.data({ id: this.data.idUsuario });
+          this.navCtrl.setRoot(TabsPage, { id: this.data.idUsuario });
           // console.log(this.itens.length);
           // for (let i = 0; i <= this.itens.length; i++) {
           //    console.log(this.itens[i]);

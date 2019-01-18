@@ -83,6 +83,7 @@ export class CadastroTarefaPage {
         // for (let i = 0; i <= this.itens.length; i++) {
         //    console.log(this.itens[i]);
         // }  
+        this.sendNotification("Tarefa cadastrada com sucesso");
       },
         (error: any) => {
           console.log("ALGO ERRADO");

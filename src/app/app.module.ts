@@ -15,6 +15,7 @@ import { HttpModule } from '@angular/http';
 import { CadastroTarefaPage } from '../pages/cadastro-tarefa/cadastro-tarefa';
 import { CadastroTarefaPageModule } from '../pages/cadastro-tarefa/cadastro-tarefa.module';
 import { TarefasPage } from '../pages/tarefas/tarefas';
+import { VisualizarEditarTarefaPageModule } from '../pages/visualizar-editar-tarefa/visualizar-editar-tarefa.module';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { TarefasPage } from '../pages/tarefas/tarefas';
     BrowserModule,
     IonicModule.forRoot(MyApp),
     HttpModule,
-    LoginPageModule
+    LoginPageModule,
+    VisualizarEditarTarefaPageModule
    // CadastroTarefaPageModule
   ],
   bootstrap: [IonicApp],

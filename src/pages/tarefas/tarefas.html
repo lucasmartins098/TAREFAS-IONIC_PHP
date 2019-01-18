@@ -45,11 +45,27 @@
 
   <div [ngSwitch]="tarefas">
     <ion-list *ngSwitchCase="'geral'">
-      <ion-item>
-        <ion-thumbnail item-start>
-          <img src="img/thumbnail-puppy-1.jpg">
-        </ion-thumbnail>
-        <h2>Ruby</h2>
+      <ion-item *ngFor="let item of itens">
+        <ion-card>
+
+          <ion-item>
+            <h2 align="center"><font color="green">{{item.nome}}</font></h2>
+            <p>Dia: {{item.data}}</p>
+            <p>Horário: {{item.horario}}</p>
+          </ion-item>
+          <!-- <ion-card-content>
+            <p>ssssss</p>
+          </ion-card-content> -->
+          <ion-row>
+            <ion-col>
+              <button ion-button icon-start clear small color="danger" (click)="showConfirmAlert(item)">
+                <ion-icon name="trash"></ion-icon>
+                <div>Deletar</div>
+              </button>
+            </ion-col>
+          </ion-row>
+          <button ion-button block (click)="abrirParaVisualizarEditar(item)">Detalhes</button>
+        </ion-card>
       </ion-item>
     </ion-list>
 

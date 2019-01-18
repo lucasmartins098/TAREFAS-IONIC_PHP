@@ -101,11 +101,12 @@
         try
         {
           $pdo = parent::getDB();
-          $query = $pdo->prepare("DELETE FROM tarefa WHERE idTarefa = ?");
-          $query->bindParam(1, $this->getIdTarefa);
+		  $IdTarefa = $this->getIdTarefa();
+          $query = $pdo->prepare("DELETE FROM tarefa WHERE IdTarefa = ?");
+          $query->bindParam(1, $IdTarefa);
           $query->execute();
 
-          echo ('Tarefa excluída com sucesso');
+          echo "Tarefa excluída com sucesso".$this->getIdTarefa();
         }
           catch(PDOException $e)
           {

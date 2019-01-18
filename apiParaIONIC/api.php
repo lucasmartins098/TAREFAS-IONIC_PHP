@@ -77,6 +77,15 @@
 		 $tarefa->setIdUsuario($obj->idUsuario);
          $tarefa->listarTarefas();
          break;
+		 CASE "deletarTarefa":
+		 	 if(is_null($obj->idTarefa)){
+			 echo "Id não pode ser nulo";
+		 }
+		 else{
+		 $tarefa->setIdTarefa($obj->idTarefa);
+         $tarefa->deletarTarefa();
+         }
+		 break;
 		 CASE "logar":
          $usuario->setLogin($obj->login);
     	 $usuario->setSenha($obj->senha);

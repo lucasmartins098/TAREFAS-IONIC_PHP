@@ -20,16 +20,13 @@
  
         exit(0);
     }
-
     //http://stackoverflow.com/questions/15485354/angular-http-post-to-php-and-undefined
     $postdata = file_get_contents("php://input");
     
     //if (isset($postdata)) {
-
         $json    =  file_get_contents('php://input');
         $obj     =  json_decode($json);
         $key     =  strip_tags($obj->key);
-
         $request = json_decode($postdata);
         $usuario = new Usuario;
 		$tarefa = new Tarefa;
@@ -90,6 +87,16 @@
          $usuario->setLogin($obj->login);
     	 $usuario->setSenha($obj->senha);
          $usuario->logar();
+         break;
+		 CASE "editarTarefa":
+         $tarefa->setNome($obj->nome);
+    	 $tarefa->setDescricao($obj->descricao);
+		 $tarefa->setIdTarefa($obj->idTarefa);
+		 $tarefa->setHorario($obj->horario);
+		 $tarefa->setData($obj->data);
+		 $tarefa->setFavorito($obj->favorito);
+		 $tarefa->setRealizada($obj->realizada);
+         $tarefa->editarTarefa();
          break;
          }
 //    }

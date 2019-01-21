@@ -17,7 +17,16 @@
 		private $idUsuario;
 		private $data;
 		private $horario;
+		private $realizada;
 		
+	function getRealizada(){
+		return $this->realizada;
+	}
+
+	public function setRealizada($realizada){
+		$this->realizada = $realizada;
+	}
+	
 	public function getNome(){
 		return $this->nome;
 	}
@@ -118,13 +127,27 @@
        {
         try
         {
+		
+		$idTarefa = $this->getIdTarefa();
+		$descricao = $this->getDescricao();
+		$nome = $this->getNome();
+		$data = $this->getData();
+		$horario = $this->getHorario();
+		$favorito = $this->getFavorito();
+		$realizada = $this->getRealizada();
+
           $pdo = parent::getDB();
-          $query = $pdo->prepare("UPDATE tarefa SET nome = ? WHERE id = ?");
+          $query = $pdo->prepare("UPDATE tarefa set nome = ?, descricao = ?, data = ?, horario = ?, favorito = ?, realizada = ? WHERE IdTarefa = ? ");
           $query->bindParam(1, $nome);
-          $query->bindParam(2, $idUsuario);
+          $query->bindParam(2, $descricao);
+          $query->bindParam(3, $data);
+          $query->bindParam(4, $horario);
+          $query->bindParam(5, $favorito);
+          $query->bindParam(6, $realizada);
+          $query->bindParam(7, $idTarefa);
           $query->execute();
 
-          echo ('Usuário editado com sucesso');
+          echo ('Tarefa editada com sucesso');
         }
           catch(PDOException $e)
           {

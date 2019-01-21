@@ -74,6 +74,16 @@
 		 $tarefa->setIdUsuario($obj->idUsuario);
          $tarefa->listarTarefas();
          break;
+		 CASE "listarTarefasFavoritas":
+		 //echo "IdUsuario: //////".$obj->idUsuario."//////////////";
+		 $tarefa->setIdUsuario($obj->idUsuario);
+         $tarefa->listarTarefasFavoritas();
+         break;
+		 CASE "listarTarefasRealizadas":
+		 //echo "IdUsuario: //////".$obj->idUsuario."//////////////";
+		 $tarefa->setIdUsuario($obj->idUsuario);
+         $tarefa->listarTarefasRealizadas();
+         break;
 		 CASE "deletarTarefa":
 		 	 if(is_null($obj->idTarefa)){
 			 echo "Id não pode ser nulo";

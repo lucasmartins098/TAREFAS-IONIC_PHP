@@ -184,7 +184,67 @@
                 echo $e->getmessage();
             }
       }
+	  
+	  public function listarTarefasFavoritas()
+      {
+          try 
+          {
+            $data = array();
+            $pdo = parent::getdb();
+			$idUsuario = $this->getIdUsuario();
+				  $stmt = $pdo->prepare('SELECT idTarefa, nome, descricao, horario, data FROM tarefa WHERE IdUsuario_tarefa = ? AND favorito = true ORDER BY data ASC');
+				  //$stmt->execute(['id' => 1]);
+				  $stmt->bindParam(1,$idUsuario);
+				  $stmt->execute();
+				  while($row  = $stmt->fetch(PDO::FETCH_OBJ))
+				  {
+					 //$i = 0;
+					 $data[] = $row;
+					 // Retorna um dado em formato JSON
+				  //$i++;
+				  }
+				  //return json_encode($data);
+
+				  // Retorna um dado em formato JSON
+				  echo json_encode($data);
+			   
+          }
+            catch(pdoexception $e)
+            {
+                echo $e->getmessage();
+            }
+      }
 	   
+	   
+	  public function listarTarefasRealizadas()
+      {
+          try 
+          {
+            $data = array();
+            $pdo = parent::getdb();
+			$idUsuario = $this->getIdUsuario();
+				  $stmt = $pdo->prepare('SELECT idTarefa, nome, descricao, horario, data FROM tarefa WHERE IdUsuario_tarefa = ? AND realizada = true ORDER BY data ASC');
+				  //$stmt->execute(['id' => 1]);
+				  $stmt->bindParam(1,$idUsuario);
+				  $stmt->execute();
+				  while($row  = $stmt->fetch(PDO::FETCH_OBJ))
+				  {
+					 //$i = 0;
+					 $data[] = $row;
+					 // Retorna um dado em formato JSON
+				  //$i++;
+				  }
+				  //return json_encode($data);
+
+				  // Retorna um dado em formato JSON
+				  echo json_encode($data);
+			   
+          }
+            catch(pdoexception $e)
+            {
+                echo $e->getmessage();
+            }
+      }
       // // // // // // // public function listarusuario()
       // // // // // // // {
           // // // // // // // try 

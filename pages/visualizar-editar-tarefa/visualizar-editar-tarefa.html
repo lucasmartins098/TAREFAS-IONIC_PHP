@@ -7,7 +7,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>Visualizar / Editar Tarefa</ion-title>
+    <ion-title><font size="2">Visualizar / Editar Tarefa</font></ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -17,32 +17,32 @@
 
     <ion-item>
       <ion-label>Favorita</ion-label>
-      <ion-checkbox [(ngModel)]="item.favorito"></ion-checkbox>
+      <ion-checkbox checked="item.favorito" [(ngModel)]="tarefaJson.favorito"></ion-checkbox>
     </ion-item>
 
     <ion-item>
       <ion-label>Realizada</ion-label>
-      <ion-checkbox ></ion-checkbox>
-    <!-- //[(ngModel)]="item.favorito" -->
+      <ion-checkbox [(ngModel)]="tarefaJson.realizada"></ion-checkbox>
+      <!-- //[(ngModel)]="item.favorito" -->
     </ion-item>
 
     <ion-item>
       <ion-label floating>Título:</ion-label>
-      <ion-input value="{{item.nome}}" type="text" [(ngModel)]="tarefa.nome"></ion-input>
+      <ion-input value="{{item.nome}}" type="text" [(ngModel)]="tarefaJson.nome"></ion-input>
     </ion-item>
 
     <ion-item>
       <ion-label floating>Descrição:</ion-label>
-      <ion-input value="{{item.descricao}}" type="text" [(ngModel)]="tarefa.descricao"></ion-input>
+      <ion-input value="{{item.descricao}}" type="text" [(ngModel)]="tarefaJson.descricao"></ion-input>
     </ion-item>
 
     <ion-label>Horário</ion-label>
     <ion-item>
-      <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" [(ngModel)]="tarefa.timeStarts"></ion-datetime>
+      <ion-datetime displayFormat="HH:mm" pickerFormat="HH mm" [(ngModel)]="event.timeStarts"></ion-datetime>
     </ion-item>
     <ion-label>Dia</ion-label>
     <ion-item>
-      <ion-datetime displayFormat="YYYY MMM DD" pickerFormat="YYYY MMM DD" [(ngModel)]="tarefa.month"></ion-datetime>
+      <ion-datetime displayFormat="YYYY MMM DD DDD" pickerFormat="YYYY MMM DD DDD" [(ngModel)]="event.month"></ion-datetime>
     </ion-item>
 
     <button ion-button block (click)="editarTarefa()">EDITAR</button>

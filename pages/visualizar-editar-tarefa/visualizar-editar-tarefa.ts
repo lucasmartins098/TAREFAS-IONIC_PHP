@@ -24,25 +24,39 @@ export class VisualizarEditarTarefaPage {
 
   private baseURL = "http://localhost/apiParaIONIC/api.php/";
   public tarefa: Array<any> = [{
-    nome: this.navParams.get("nome"),
-    descricao: this.navParams.get("descricao"),
-    idTarefa: this.navParams.get("idTarefa"),
-    data: this.navParams.get("data"),
-    horario: this.navParams.get("horario"),
-    month: this.navParams.get("data"),
-    timeStarts: this.navParams.get("horario"),
-    timeEnds: this.navParams.get("horario")
+    nome: this.navParams.get('nome'),
+    descricao: this.navParams.get('descricao'),
+    idTarefa: this.navParams.get('idTarefa'),
+    data: this.navParams.get('data'),
+    horario: this.navParams.get('horario'),
+    favorito: false,
+    realizada: false
   }];
 
+  public tarefaJson = {
+    nome: this.navParams.get('nome'),
+    descricao: this.navParams.get('descricao'),
+    idTarefa: this.navParams.get('idTarefa'),
+    data: this.navParams.get('data'),
+    horario: this.navParams.get('horario'),
+    favorito: false,
+    realizada: false
+  };
+
   public event = {
-    month: '1990-02-19',
-    timeStarts: '07:43',
-    timeEnds: '1990-02-20'
+    month: this.navParams.get('data'),
+    timeStarts: this.navParams.get('horario'),
+    timeEnds: this.navParams.get('horario')
   }
 
   ionViewDidEnter() {
-    console.log("Construtor nOME: " + this.navParams.get('nome') + this.tarefa["nome"]);
-    console.log("Construtor DESC: " + this.navParams.get('descricao') + this.tarefa["descricao"]);
+    console.log("Construtor nOME: " + this.navParams.get('nome') + " " +this.tarefaJson.nome);
+    console.log("Construtor DESC: " + this.navParams.get('descricao')+" " + this.tarefaJson.descricao);
+    console.log("Construtor Favorito: " + this.navParams.get('favorito') +" " + this.tarefaJson.favorito);
+    console.log("Construtor ID: " + this.navParams.get('idTarefa') + " " +this.tarefaJson.idTarefa);
+    console.log("Construtor Realizada: " + this.navParams.get('realizada') +" " + this.tarefaJson.realizada);
+    console.log("Construtor data: " + this.navParams.get('data') + " " +this.tarefaJson.data);
+    console.log("Construtor horario: " + this.navParams.get('horario') + " " +this.tarefaJson.horario);
   }
 
   editarTarefa(): void {
@@ -50,16 +64,20 @@ export class VisualizarEditarTarefaPage {
     console.log(this.tarefa["nome"]);
     let headers: any = new HttpHeaders({ 'Content-Type': 'application/json' }),
       options: any = {
-        "key": "editarTarefa", "nome": this.tarefa["nome"], "IdTarefa": this.tarefa["idTarefa"],
-        "descricao": this.tarefa["descricao"], "horario": this.tarefa["timeStarts"], "data": this.tarefa["month"]
+        "key": "editarTarefa", "nome": this.tarefaJson.nome, "idTarefa": this.navParams.get('idTarefa'),
+        "descricao": this.tarefaJson.descricao, "horario": this.event.timeStarts, "data": this.event.month, "favorito": this.tarefaJson.favorito, "realizada": this.tarefaJson.realizada  
       },
       url: any = this.baseURL;
+
+      console.log(this.tarefaJson.realizada);
+      console.log(this.tarefaJson.favorito);
 
     this.http
       .post(url, JSON.stringify(options), headers)
       .subscribe(data => {
         // If the request was successful notify the user
         //this.hideForm = true;
+        console.log(data["_body"]);
         this.sendNotification(data["_body"]);
       },
         (error: any) => {

@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angu
 import { Http } from '@angular/http';
 import { HttpHeaders } from '@angular/common/http';
 import { TabsPage } from '../tabs/tabs';
+import { Calendar } from 'ionic3-calendar-neo-ptbr/src/calendar/calendar';
 
 /**
  * Generated class for the CadastroTarefaPage page.
@@ -23,9 +24,9 @@ export class CadastroTarefaPage {
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
     public toastCtrl: ToastController,
-    public http: Http
+    public http: Http,
+    public calendario: Calendar
     ) {
-     
       // tabs:TabsPage
       //this.idUsuario = TabsPage.idUsuario;
   }
@@ -35,13 +36,14 @@ export class CadastroTarefaPage {
   public itens: Array<any> = [];
 
  
+  
+
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad CadastroTarefaPage');
     console.log(this.dado.idUsuario);
   }
  
-
   //cucumber: boolean;
 
   // updateCucumber() {
@@ -89,6 +91,21 @@ export class CadastroTarefaPage {
           console.log("ALGO ERRADO");
         });
   }
+
+
+  currentEvents = [
+    {
+      year: 2017,
+      month: 11,
+      date: 25
+    },
+    {
+      year: 2017,
+      month: 11,
+      date: 26
+    }
+  ];
+
 
   sendNotification(message: string): void {
     let notification = this.toastCtrl.create({

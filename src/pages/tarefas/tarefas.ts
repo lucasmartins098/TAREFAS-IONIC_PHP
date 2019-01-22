@@ -20,6 +20,8 @@ export class TarefasPage {
 
   private baseURL: string = "http://localhost/apiParaIONIC/api.php/";
   public itens: Array<any> = [];
+  public itensFavoritos: Array<any> = [];
+  public itensRealizados: Array<any> = [];
   private data: any = { nome: "", login: "", token: "", idUsuario: "" };
   public dado: any = {
     idUsuario: this.NP.get('idUsuario'),
@@ -35,6 +37,8 @@ export class TarefasPage {
 
   ionViewDidEnter() {
     this.carregarTarefas();
+    this.carregarTarefasFavoritas();
+    this.carregarTarefasRealizadas();
   }
 
   carregarTarefas(): void {
@@ -74,8 +78,65 @@ export class TarefasPage {
         });
   }
 
+  carregarTarefasFavoritas(): void {
+    let headers: any = new HttpHeaders({ 'Content-Type': 'application/json' }),
+      options: any = { "key": "listarTarefasFavoritas", "idUsuario": this.dado.idUsuario },
+      url: any = this.baseURL;
+    console.log("Passou pela função");
+    // console.log(this.dado.login);
+    console.log("Id para a tarefa: " + this.dado.idUsuario);
+    this.http.post(url, JSON.stringify(options), headers)
+      .subscribe((data: any) => {
+        //this.data.response = data["_body"];
+        //console.log(this.data.response);
 
+        //console.log(data["_body"].nome);
+        console.dir(data);
+        const retorno = data._body;
+        console.log(retorno);
+        this.itensFavoritos = JSON.parse(data._body);
+        this.data = JSON.parse(data._body);
+        console.log("itens");
+        console.log(this.itensFavoritos);
+        console.log(this.itensFavoritos.length);
+        for (let i = 0; i <= this.itensFavoritos.length; i++) {
+          console.log(this.itensFavoritos[i]);
+        }
+      },
+        (error: any) => {
+          console.log("ALGO ERRADO");
+        });
+  }
 
+  carregarTarefasRealizadas(): void {
+    let headers: any = new HttpHeaders({ 'Content-Type': 'application/json' }),
+      options: any = { "key": "listarTarefasRealizadas", "idUsuario": this.dado.idUsuario },
+      url: any = this.baseURL;
+    console.log("Passou pela função");
+    // console.log(this.dado.login);
+    console.log("Id para a tarefa: " + this.dado.idUsuario);
+    this.http.post(url, JSON.stringify(options), headers)
+      .subscribe((data: any) => {
+        //this.data.response = data["_body"];
+        //console.log(this.data.response);
+
+        //console.log(data["_body"].nome);
+        console.dir(data);
+        const retorno = data._body;
+        console.log(retorno);
+        this.itensRealizados = JSON.parse(data._body);
+        this.data = JSON.parse(data._body);
+        console.log("itens");
+        console.log(this.itensRealizados);
+        console.log(this.itensRealizados.length);
+        for (let i = 0; i <= this.itensRealizados.length; i++) {
+          console.log(this.itensRealizados[i]);
+        }
+      },
+        (error: any) => {
+          console.log("ALGO ERRADO");
+        });
+  }
 
   showConfirmAlert(item) {
     const confirm = this.alertCtrl.create({
@@ -120,11 +181,12 @@ export class TarefasPage {
   }
 
   abrirParaVisualizarEditar(item) {
+    console.log(item.favorito);
     console.log("abrir" + item);
     console.log("abrir" + item.idTarefa);
     console.log("abrir" + item.nome);
     console.log("abrir" + item.descricao);
-    this.navCtrl.push(VisualizarEditarTarefaPage, { idTarefa: item.idTarefa, nome: item.nome, descricao: item.descricao, data: item.data, horario: item.horario });
+    this.navCtrl.push(VisualizarEditarTarefaPage, { idTarefa: item.idTarefa, nome: item.nome, descricao: item.descricao, data: item.data, horario: item.horario, favorito: item.favorito });
   }
 
   sendNotification(message: string): void {
@@ -136,6 +198,3 @@ export class TarefasPage {
   }
 
 }
-
-
-

@@ -16,6 +16,7 @@ import { CadastroTarefaPage } from '../pages/cadastro-tarefa/cadastro-tarefa';
 import { CadastroTarefaPageModule } from '../pages/cadastro-tarefa/cadastro-tarefa.module';
 import { TarefasPage } from '../pages/tarefas/tarefas';
 import { VisualizarEditarTarefaPageModule } from '../pages/visualizar-editar-tarefa/visualizar-editar-tarefa.module';
+import { CalendarModule } from 'ionic3-calendar-neo-ptbr';
 
 @NgModule({
   declarations: [
@@ -29,11 +30,20 @@ import { VisualizarEditarTarefaPageModule } from '../pages/visualizar-editar-tar
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(MyApp),
+    IonicModule.forRoot(MyApp, {
+      monthNames: ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"],
+      monthShortNames: ['Jan', 'Fev', 'Mar', "Abr", "Mai", "Jun", "Jul", "Ago", "Sep", "Out", "Nov", "Dez"],
+      dayShortNames: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'],
+      dayNames: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],
+      backButtonText: "Voltar",
+      doneText: 'Feito',
+      cancelText: 'Cancelar',
+    }),
     HttpModule,
+    CalendarModule,
     LoginPageModule,
     VisualizarEditarTarefaPageModule
-   // CadastroTarefaPageModule
+    // CadastroTarefaPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -48,7 +58,7 @@ import { VisualizarEditarTarefaPageModule } from '../pages/visualizar-editar-tar
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    { provide: ErrorHandler, useClass: IonicErrorHandler }
   ]
 })
-export class AppModule {}
+export class AppModule { }

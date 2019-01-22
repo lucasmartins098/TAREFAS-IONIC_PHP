@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 
-import { AboutPage } from '../about/about';
-import { ContactPage } from '../contact/contact';
-import { HomePage } from '../home/home';
+// import { AboutPage } from '../about/about';
+// import { ContactPage } from '../contact/contact';
+// import { HomePage } from '../home/home';
 import { CadastroTarefaPage } from '../cadastro-tarefa/cadastro-tarefa';
 import { NavParams } from 'ionic-angular';
 import { TarefasPage } from '../tarefas/tarefas';

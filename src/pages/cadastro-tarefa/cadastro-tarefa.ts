@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ToastController, ModalController, AlertController } from 'ionic-angular';
 import { Http } from '@angular/http';
 import { HttpHeaders } from '@angular/common/http';
 import { TabsPage } from '../tabs/tabs';
+import * as moment from 'moment';
 
 /**
  * Generated class for the CadastroTarefaPage page.
@@ -18,35 +19,35 @@ import { TabsPage } from '../tabs/tabs';
 })
 export class CadastroTarefaPage {
 
-  public idUsuario:any;
+  public idUsuario: any;
+
+  eventSource = [];
+  viewTitle: string;
+  noEventsLabel: string = "Não há eventos listados";
+  selectedDay = new Date();
+  calendar = {
+    mode: 'month',
+    locale: 'pt-br',
+    currentDate: new Date()
+  };
+
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
     public toastCtrl: ToastController,
-    public http: Http
-    ) {
-     
-      // tabs:TabsPage
-      //this.idUsuario = TabsPage.idUsuario;
+    public http: Http) {
   }
 
-  public dado: any = { nome: "", descricao: "", data: "", horario: "", favorito: true, idUsuario : this.navParams.get('idUsuario')};
+
+
+  public dado: any = { nome: "", descricao: "", data: "", horario: "", favorito: true, idUsuario: this.navParams.get('idUsuario') };
   private baseURL = "http://localhost/apiParaIONIC/api.php/";
   public itens: Array<any> = [];
-
- 
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad CadastroTarefaPage');
     console.log(this.dado.idUsuario);
   }
- 
-
-  //cucumber: boolean;
-
-  // updateCucumber() {
-  //   console.log('Cucumbers new state:' + this.dado.favorito);
-  // }
 
   public event = {
     month: '1990-02-19',
@@ -58,15 +59,15 @@ export class CadastroTarefaPage {
     let headers: any = new HttpHeaders({ 'Content-Type': 'application/json' }),
       options: any = {
         "key": "cadastrarTarefa", "nome": this.dado.nome, "descricao": this.dado.descricao, "data": this.event.month,
-        "horario": this.event.timeStarts, "favorito": this.dado.favorito, "idUsuario" : this.dado.idUsuario 
+        "horario": this.event.timeStarts, "favorito": this.dado.favorito, "idUsuario": this.dado.idUsuario
       },
-    url: any = this.baseURL;
+      url: any = this.baseURL;
     console.log("Passou pela função");
     console.log("FAVORITO");
     console.log(this.dado.favorito);
     console.log("FAVORITO");
     console.log(this.dado.descricao);
-    console.log("Data: "+this.event.month);
+    console.log("Data: " + this.event.month);
     console.log("Horário: " + this.event.timeStarts);
     this.http.post(url, JSON.stringify(options), headers)
       .subscribe((data: any) => {
@@ -89,6 +90,21 @@ export class CadastroTarefaPage {
           console.log("ALGO ERRADO");
         });
   }
+
+
+  currentEvents = [
+    {
+      year: 2017,
+      month: 11,
+      date: 25
+    },
+    {
+      year: 2017,
+      month: 11,
+      date: 26
+    }
+  ];
+
 
   sendNotification(message: string): void {
     let notification = this.toastCtrl.create({

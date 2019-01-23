@@ -16,7 +16,7 @@ import { CadastroTarefaPage } from '../pages/cadastro-tarefa/cadastro-tarefa';
 import { CadastroTarefaPageModule } from '../pages/cadastro-tarefa/cadastro-tarefa.module';
 import { TarefasPage } from '../pages/tarefas/tarefas';
 import { VisualizarEditarTarefaPageModule } from '../pages/visualizar-editar-tarefa/visualizar-editar-tarefa.module';
-import { CalendarModule } from 'ionic3-calendar-neo-ptbr';
+import { SingUpPageModule } from '../pages/sing-up/sing-up.module';
 
 @NgModule({
   declarations: [
@@ -40,8 +40,8 @@ import { CalendarModule } from 'ionic3-calendar-neo-ptbr';
       cancelText: 'Cancelar',
     }),
     HttpModule,
-    CalendarModule,
     LoginPageModule,
+    SingUpPageModule,
     VisualizarEditarTarefaPageModule
     // CadastroTarefaPageModule
   ],

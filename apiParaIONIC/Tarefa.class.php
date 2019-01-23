@@ -84,19 +84,28 @@
 	}
 	
     public function cadastrarTarefa(){
-      try{
+      
+	  
+	  try{
           $pdo = parent::getDB();
-         
                 $stmt2 = $pdo->prepare("INSERT INTO tarefa(nome, descricao, favorito, data, horario, IdUsuario_Tarefa) VALUES(?,?,?,?,?,?)");
                 $stmt2->bindValue(1, $this->getNome());
 				$stmt2->bindValue(2, $this->getDescricao());
-				$stmt2->bindValue(3, $this->getFavorito());
+				
+				$favorito = $this->getFavorito();	
+				if($favorito != 1)
+				{
+					$stmt2->bindValue(3, null);
+				}
+				else{
+					$stmt2->bindValue(3, true);
+				}
 				$stmt2->bindValue(4, $this->getData());
 				$stmt2->bindValue(5, $this->getHorario());
 				//$stmt2->bindValue(6, 1);
 				$stmt2->bindValue(6, $this->getIdUsuario());
                 $stmt2->execute();
-                echo "tarefa inserida com sucesso";
+                echo "tarefa inserida com sucesso   ////  VaLOR".$this->getFavorito();
 			
           }//fim do try
                 catch(PDOException $e)
@@ -142,8 +151,22 @@
           $query->bindParam(2, $descricao);
           $query->bindParam(3, $data);
           $query->bindParam(4, $horario);
-          $query->bindParam(5, $favorito);
-          $query->bindParam(6, $realizada);
+			if($favorito != 1)
+			{
+				$query->bindValue(5, null);
+			}
+			else
+			{
+				$query->bindValue(5, true);
+			}
+			if($realizada != 1)
+			{
+				$query->bindValue(6, null);
+			}
+			else
+			{
+				$query->bindValue(6, true);
+			}
           $query->bindParam(7, $idTarefa);
           $query->execute();
 

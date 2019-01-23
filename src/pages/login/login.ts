@@ -4,6 +4,7 @@ import { HttpHeaders } from '@angular/common/http';
 import { Http } from '@angular/http';
 import { CadastroTarefaPage } from '../cadastro-tarefa/cadastro-tarefa';
 import { TabsPage } from '../tabs/tabs';
+import { SingUpPage } from '../sing-up/sing-up';
 
 /**
  * Generated class for the LoginPage page.
@@ -93,10 +94,14 @@ export class LoginPage {
         });
   }
 
+  signup(){
+    this.navCtrl.setRoot(SingUpPage);
+  }
+
   sendNotification(message: string): void {
     let notification = this.toastCtrl.create({
        message: message,
-       duration: 3000
+       duration: 2000
     });
     notification.present();
  }

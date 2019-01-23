@@ -192,7 +192,7 @@ export class TarefasPage {
   sendNotification(message: string): void {
     let notification = this.toastCtrl.create({
       message: message,
-      duration: 3000
+      duration: 2000
     });
     notification.present();
   }

@@ -105,7 +105,7 @@
 				//$stmt2->bindValue(6, 1);
 				$stmt2->bindValue(6, $this->getIdUsuario());
                 $stmt2->execute();
-                echo "tarefa inserida com sucesso   ////  VaLOR".$this->getFavorito();
+                echo "Tarefa inserida com sucesso.";
 			
           }//fim do try
                 catch(PDOException $e)
@@ -237,7 +237,6 @@
                 echo $e->getmessage();
             }
       }
-	   
 	   
 	  public function listarTarefasRealizadas()
       {

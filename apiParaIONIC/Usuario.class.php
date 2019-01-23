@@ -8,7 +8,15 @@
 		private $login;
 		private $senha;
 		private $logado;
-		
+		private $token;
+	
+	public function getToken(){
+		return $this->token;
+	}
+	public function setToken($token){
+		$this->token = $token;
+	}
+	
 	public function getlogado(){
 		return $this->logado;
 	}
@@ -158,6 +166,36 @@
 
 	}
 	  
+	public function verificarLogado(){
+		try 
+          {
+		$token = base64_decode($this->getToken());
+		$json = json_decode($token);
+		$login = $json->login;
+		$senha = $json->senha;
+		//echo "login: ".$login." senha: ".$senha ."Teset";
+		$pdo = parent::getDB();
+		$logar = $pdo->prepare("SELECT nome,IdUsuario FROM usuario WHERE login = ? AND senha = ?");
+		$logar->bindValue(1, $login);
+		$logar->bindValue(2, $senha);
+		$logar->execute();
+		if ($logar->rowCount() == 1)
+		{
+			echo 1;
+		}
+		else
+		{
+			echo 0;
+		}
+	}
+	catch(PDOException $e)
+	{
+		echo $e->getMessage();
+	}
+
+	}  
+	  
+	
       //   public function logar(){
       //       $pdo = parent::getDB();
             

@@ -42,10 +42,10 @@
     </ion-item>
     <ion-label>Dia</ion-label>
     <ion-item>
-      <ion-datetime displayFormat="DD/MMM/YYYY / DDDD" pickerFormat="DD/MMM/YYYY/DDDD" [(ngModel)]="event.month"></ion-datetime>
+      <ion-datetime displayFormat="YYYY MMM DD DDDD" pickerFormat="YYYY MMM DD DDD" [(ngModel)]="event.month"></ion-datetime>
     </ion-item>
 
-    <button ion-button block (click)="editarTarefa()" >EDITAR</button>
+    <button ion-button block (click)="editarTarefa()">EDITAR</button>
 
   </ion-list>
 </ion-content>

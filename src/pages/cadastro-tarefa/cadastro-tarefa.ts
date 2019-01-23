@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams, ToastController, ModalController, 
 import { Http } from '@angular/http';
 import { HttpHeaders } from '@angular/common/http';
 import { TabsPage } from '../tabs/tabs';
+import { Calendar } from 'ionic3-calendar-neo-ptbr/src/calendar/calendar';
 import * as moment from 'moment';
 
 /**
@@ -50,8 +51,8 @@ export class CadastroTarefaPage {
   }
 
   public event = {
-    month: '2019-02-19',//moment().day()+'/'+moment().month()+1+'/'+moment().year(),//'1990-02-19',
-    timeStarts: '00:00',
+    month: '1990-02-19',
+    timeStarts: '07:43',
     timeEnds: '1990-02-20'
   }
 
@@ -84,17 +85,32 @@ export class CadastroTarefaPage {
         // for (let i = 0; i <= this.itens.length; i++) {
         //    console.log(this.itens[i]);
         // }  
-        this.sendNotification("Tarefa cadastrada com sucesso  !"+"TESTE: "+this.dado.favorito);
+        this.sendNotification("Tarefa cadastrada com sucesso");
       },
         (error: any) => {
           console.log("ALGO ERRADO");
         });
   }
 
+
+  currentEvents = [
+    {
+      year: 2017,
+      month: 11,
+      date: 25
+    },
+    {
+      year: 2017,
+      month: 11,
+      date: 26
+    }
+  ];
+
+
   sendNotification(message: string): void {
     let notification = this.toastCtrl.create({
       message: message,
-      duration: 2000
+      duration: 3000
     });
     notification.present();
   }

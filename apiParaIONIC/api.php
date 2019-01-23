@@ -98,6 +98,10 @@
     	 $usuario->setSenha($obj->senha);
          $usuario->logar();
          break;
+		 CASE "verificarLogado":
+         $usuario->setToken($obj->token);
+         $usuario->verificarLogado();
+         break;
 		 CASE "editarTarefa":
          $tarefa->setNome($obj->nome);
     	 $tarefa->setDescricao($obj->descricao);

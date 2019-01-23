@@ -17,7 +17,7 @@
 
   <ion-item>
     <ion-label>Favorito</ion-label>
-    <ion-checkbox [(ngModel)]="dado.favorito"></ion-checkbox>
+    <ion-checkbox checked=false [(ngModel)]="dado.favorito"></ion-checkbox>
   </ion-item>
   <ion-label>Título da tarefa</ion-label>
   <ion-item>
@@ -33,7 +33,7 @@
   </ion-item>
   <ion-label>Dia</ion-label>
   <ion-item>
-    <ion-datetime displayFormat="DD/MMM/YYYY / DDDD" pickerFormat="DD/MMM/YYYY/DDDD" [(ngModel)]="event.month"></ion-datetime>
+    <ion-datetime displayFormat="YYYY MMM DD DDDD" pickerFormat="YYYY MMM DD DDD" [(ngModel)]="event.month"></ion-datetime>
   </ion-item>
   <ion-item>
 

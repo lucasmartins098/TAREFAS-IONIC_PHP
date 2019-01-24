@@ -13,5 +13,29 @@
 </ion-header>
 
 <ion-content padding>
-  TESTE
+  
+  <ion-label>Nome</ion-label>
+  <ion-item>
+    <ion-input type="text" [(ngModel)]="dado.nome"></ion-input>
+  </ion-item>
+
+  <ion-label>Login</ion-label>
+  <ion-item>
+    <ion-input type="text" [(ngModel)]="dado.login"></ion-input>
+  </ion-item>
+  
+  <ion-label>Senha</ion-label>
+  <ion-item>
+    <ion-input type="password" [(ngModel)]="dado.senha"></ion-input>
+  </ion-item>
+
+  <ion-label>Confirmar Senha:</ion-label>
+  <ion-item>
+    <ion-input type="password" [(ngModel)]="dado.senhaConfirmada"></ion-input>
+  </ion-item>
+
+  <button ion-button color="secondary" block (click)="cadastrarUsuario()">
+    Cadastrar
+  </button>
+  
 </ion-content>

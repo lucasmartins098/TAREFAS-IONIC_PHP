@@ -26,22 +26,7 @@
 
 </ion-header>
 
-
 <ion-content padding>
-
-  <!-- <div padding>
-    <ion-segment [(ngModel)]="tarefas">
-      <ion-segment-button value="geral">
-        Geral
-      </ion-segment-button>
-      <ion-segment-button value="favoritos">
-        Favoritas
-      </ion-segment-button>
-      <ion-segment-button value="historico">
-        Realizadas
-      </ion-segment-button>
-    </ion-segment>
-  </div> -->
 
   <div [ngSwitch]="tarefas">
     <ion-list *ngSwitchCase="'geral'">
@@ -55,9 +40,6 @@
             <p>Dia: {{item.data}}</p>
             <p>Horário: {{item.horario}}</p>
           </ion-item>
-          <!-- <ion-card-content>
-            <p>ssssss</p>
-          </ion-card-content> -->
           <ion-row>
             <ion-col>
               <button ion-button icon-start clear small color="danger" (click)="showConfirmAlert(item)">

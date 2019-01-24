@@ -60,8 +60,6 @@ export class VisualizarEditarTarefaPage {
   }
 
   editarTarefa(): void {
-    console.log(this.tarefa["idTarefa"]);
-    console.log(this.tarefa["nome"]);
     let headers: any = new HttpHeaders({ 'Content-Type': 'application/json' }),
       options: any = {
         "key": "editarTarefa", "nome": this.tarefaJson.nome, "idTarefa": this.navParams.get('idTarefa'),
@@ -88,7 +86,7 @@ export class VisualizarEditarTarefaPage {
   sendNotification(message: string): void {
     let notification = this.toastCtrl.create({
       message: message,
-      duration: 3000
+      duration: 2000
     });
     notification.present();
   }

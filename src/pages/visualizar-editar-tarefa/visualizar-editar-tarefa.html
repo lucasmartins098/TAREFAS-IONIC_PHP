@@ -7,7 +7,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title><font size="2">Visualizar / Editar Tarefa</font></ion-title>
+    <ion-title><font size="2">Visualizar / Editar </font></ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -27,13 +27,14 @@
     </ion-item>
 
     <ion-item>
-      <ion-label floating>Título:</ion-label>
+      <ion-label floating>Título</ion-label>
       <ion-input value="{{item.nome}}" type="text" [(ngModel)]="tarefaJson.nome"></ion-input>
     </ion-item>
 
     <ion-item>
-      <ion-label floating>Descrição:</ion-label>
-      <ion-input value="{{item.descricao}}" type="text" [(ngModel)]="tarefaJson.descricao"></ion-input>
+      <ion-label floating>Descrição</ion-label>
+      <!-- <ion-input value="{{item.descricao}}" type="text" [(ngModel)]="tarefaJson.descricao"></ion-input> -->
+      <ion-textarea placeholder="Descrição com limite de 500 caracteres." rows="6" cols="20" maxlength="500" [(ngModel)]="tarefaJson.descricao"></ion-textarea>
     </ion-item>
 
     <ion-label>Horário</ion-label>
@@ -42,7 +43,7 @@
     </ion-item>
     <ion-label>Dia</ion-label>
     <ion-item>
-      <ion-datetime displayFormat="YYYY MMM DD DDDD" pickerFormat="YYYY MMM DD DDD" [(ngModel)]="event.month"></ion-datetime>
+      <ion-datetime displayFormat="DD/MMM/YYYY / DDDD" pickerFormat="DD/MMM/YYYY/DDDD" [(ngModel)]="event.month"></ion-datetime>
     </ion-item>
 
     <button ion-button block (click)="editarTarefa()">EDITAR</button>

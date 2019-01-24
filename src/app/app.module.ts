@@ -1,3 +1,5 @@
+import { FormsModule } from '@angular/forms';
+import { MbscModule } from '@mobiscroll/angular';
 import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
@@ -16,8 +18,9 @@ import { CadastroTarefaPage } from '../pages/cadastro-tarefa/cadastro-tarefa';
 import { CadastroTarefaPageModule } from '../pages/cadastro-tarefa/cadastro-tarefa.module';
 import { TarefasPage } from '../pages/tarefas/tarefas';
 import { VisualizarEditarTarefaPageModule } from '../pages/visualizar-editar-tarefa/visualizar-editar-tarefa.module';
-import { CalendarModule } from 'ionic3-calendar-neo-ptbr';
-import { NgCalendarModule } from 'ionic2-calendar';
+import { SingUpPageModule } from '../pages/sing-up/sing-up.module';
+import { IonicStorageModule } from '@ionic/storage';
+import { SairPage } from '../pages/sair/sair';
 
 @NgModule({
   declarations: [
@@ -27,19 +30,29 @@ import { NgCalendarModule } from 'ionic2-calendar';
     HomePage,
     CadastroTarefaPage,
     TarefasPage,
+    SairPage,
     TabsPage
   ],
-  imports: [
+  imports: [ 
+    FormsModule, 
+    MbscModule,
     BrowserModule,
     IonicModule.forRoot(MyApp, {
       monthNames: ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"],
       monthShortNames: ['Jan', 'Fev', 'Mar', "Abr", "Mai", "Jun", "Jul", "Ago", "Sep", "Out", "Nov", "Dez"],
       dayShortNames: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'],
+      dayNames: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],
+      backButtonText: "Voltar",
+      doneText: 'Feito',
+      cancelText: 'Cancelar',
     }),
-    NgCalendarModule,
+    IonicStorageModule.forRoot({
+      name: '__mydb',
+         driverOrder: ['indexeddb', 'sqlite', 'websql']
+    }),
     HttpModule,
-    CalendarModule,
     LoginPageModule,
+    SingUpPageModule,
     VisualizarEditarTarefaPageModule
     // CadastroTarefaPageModule
   ],
@@ -51,6 +64,7 @@ import { NgCalendarModule } from 'ionic2-calendar';
     HomePage,
     CadastroTarefaPage,
     TarefasPage,
+    SairPage,
     TabsPage
   ],
   providers: [

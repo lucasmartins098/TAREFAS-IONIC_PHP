@@ -10,6 +10,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import * as moment from 'moment';
 import * as _ from "lodash";
+
+
+
 var Calendar = /** @class */ (function () {
     function Calendar() {
         this.onDaySelect = new EventEmitter();
@@ -19,7 +22,7 @@ var Calendar = /** @class */ (function () {
         this.weekArray = []; // Array for each row of the calendar
         this.lastSelect = 0; // Record the last clicked location
         //this.weekHead = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-        this.weekHead = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab'];
+        this.weekHead = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
         this.currentYear = moment().year();
         this.currentMonth = moment().month();
         this.currentDate = moment().date();
@@ -29,28 +32,46 @@ var Calendar = /** @class */ (function () {
         this.createMonth(this.displayYear, this.displayMonth);
     };
     Calendar.prototype.ngAfterViewInit = function () {
-        this.today();
+        this.today(this.currentYear,this.currentMonth,this.currentDate);
         setTimeout(() => {
-            this.today();
+            this.today(this.currentYear,this.currentMonth,this.currentDate);
             console.log("execute js");
          }, 1000);
     };
     // Jump to today
-    Calendar.prototype.today = function () {
-        this.displayYear = this.currentYear;
-        this.displayMonth = this.currentMonth;
-        this.createMonth(this.currentYear, this.currentMonth);
+    Calendar.prototype.today = function (currentYear,currentMonth, currentDate) {
+        this.displayYear = currentYear;
+        this.displayMonth = currentMonth;
+        this.createMonth(currentYear, currentMonth);
         // Mark today as a selection
         var todayIndex = _.findIndex(this.dateArray, {
-            year: this.currentYear,
-            month: this.currentMonth,
-            date: this.currentDate,
+            year: currentYear,
+            month: currentMonth,
+            date: currentDate,
             isThisMonth: true
         });
         this.lastSelect = todayIndex;
         this.dateArray[todayIndex].isSelect = true;
         this.onDaySelect.emit(this.dateArray[todayIndex]);
     };
+
+    // Jump to 
+    // carregarDataEspecifica = function (year,month,date) {
+    //     this.displayYear = year;
+    //     this.displayMonth = month;
+    //     this.createMonth(year, month);
+    //     // Mark today as a selection
+    //     var todayIndex = _.findIndex(this.dateArray, {
+    //         year: year,
+    //         month: month,
+    //         date: date,
+    //         isThisMonth: true
+    //     });
+    //     this.lastSelect = todayIndex;
+    //     this.dateArray[todayIndex].isSelect = true;
+    //     this.onDaySelect.emit(this.dateArray[todayIndex]);
+    // };
+
     Calendar.prototype.isInEvents = function (year, month, date) {
         var i = 0, len = this.events.length;
         for (; i < len; i++) {

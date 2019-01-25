@@ -35,6 +35,7 @@ import * as _ from "lodash";
 `
 })
 
+
 export class Calendar {
 
     @Output() onDaySelect = new EventEmitter<dateObj>();
@@ -55,6 +56,7 @@ export class Calendar {
 
     displayMonth: number;
 
+    
     dateArray: Array<dateObj> = []; // Array for all the days of the month
 
     weekArray = []; // Array for each row of the calendar
@@ -62,14 +64,14 @@ export class Calendar {
     lastSelect: number = 0; // Record the last clicked location
 
     //weekHead: string[] = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-    weekHead: string[] = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab'];
+    weekHead: string[] = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
 
 
     constructor() {
-        this.currentYear = moment().year();
-        this.currentMonth = moment().month();
-        this.currentDate = moment().date();
-        this.currentDay = moment().day();
+        this.currentYear = 2020;
+        this.currentMonth = 1;
+        this.currentDate = 21;
+        this.currentDay = 22;
     }
 
     ngOnChanges() {
@@ -77,26 +79,26 @@ export class Calendar {
     }
 
     ngAfterViewInit() {        
-            this.today();
+            this.today(this.currentYear,this.currentMonth,this.currentDate);
             
         setTimeout(()=>{
             //Works! :)
-            this.today();
+            this.today(this.currentYear,this.currentMonth,this.currentDate);
         }, 1000); 
 
     }
 
     // Jump to today
-    today() {
-        this.displayYear = this.currentYear;
-        this.displayMonth = this.currentMonth;
-        this.createMonth(this.currentYear, this.currentMonth);
+    today(currentYear,currentMonth, currentDate) {
+        this.displayYear = currentYear;
+        this.displayMonth = currentMonth;
+        this.createMonth(currentYear, currentMonth);
 
         // Mark today as a selection
         let todayIndex = _.findIndex(this.dateArray, {
-            year: this.currentYear,
-            month: this.currentMonth,
-            date: this.currentDate,
+            year: currentYear,
+            month: currentMonth,
+            date: currentDate,
             isThisMonth: true
         })
         this.lastSelect = todayIndex;
@@ -104,6 +106,25 @@ export class Calendar {
 
         this.onDaySelect.emit(this.dateArray[todayIndex]);
     }
+
+    // carregarDataEspecifica(year:number,month:number,date:number) {
+    //     this.displayYear = year;
+    //     this.displayMonth = month;
+    //     this.createMonth(year, month);
+
+    //     // Mark today as a selection
+    //     let dataEspecifica = _.findIndex(this.dateArray, {
+    //         year: year,
+    //         month: month,
+    //         date: date,
+    //         isThisMonth: true
+    //     })
+    //     this.lastSelect = dataEspecifica;
+    //     this.dateArray[dataEspecifica].isSelect = true;
+
+    //     this.onDaySelect.emit(this.dateArray[dataEspecifica]);
+    // }
+
 
     isInEvents(year, month, date) {
         var i = 0, len = this.events.length;

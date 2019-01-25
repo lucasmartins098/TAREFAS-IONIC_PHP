@@ -1,3 +1,5 @@
+import { MbscModule } from '@mobiscroll/angular';
+import { FormsModule } from '@angular/forms';
 import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
@@ -19,6 +21,9 @@ import { VisualizarEditarTarefaPageModule } from '../pages/visualizar-editar-tar
 import { SingUpPageModule } from '../pages/sing-up/sing-up.module';
 import { IonicStorageModule } from '@ionic/storage';
 import { SairPage } from '../pages/sair/sair';
+import { CalendarModule } from 'ionic3-calendar-neo-ptbr';
+import { VisualizarEditarTarefaPage } from '../pages/visualizar-editar-tarefa/visualizar-editar-tarefa';
+//import { NgCalendarModule  } from 'ionic2-calendar';
 
 @NgModule({
   declarations: [
@@ -29,9 +34,14 @@ import { SairPage } from '../pages/sair/sair';
     CadastroTarefaPage,
     TarefasPage,
     SairPage,
-    TabsPage
+    TabsPage,
+    VisualizarEditarTarefaPage
   ],
-  imports: [
+  imports: [ 
+    //NgCalendarModule,
+    MbscModule, 
+    FormsModule,
+    CalendarModule,
     BrowserModule,
     IonicModule.forRoot(MyApp, {
       monthNames: ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"],
@@ -48,8 +58,7 @@ import { SairPage } from '../pages/sair/sair';
     }),
     HttpModule,
     LoginPageModule,
-    SingUpPageModule,
-    VisualizarEditarTarefaPageModule
+    SingUpPageModule
     // CadastroTarefaPageModule
   ],
   bootstrap: [IonicApp],
@@ -61,7 +70,8 @@ import { SairPage } from '../pages/sair/sair';
     CadastroTarefaPage,
     TarefasPage,
     SairPage,
-    TabsPage
+    TabsPage,
+    VisualizarEditarTarefaPage
   ],
   providers: [
     StatusBar,

@@ -20,9 +20,13 @@ export class SairPage {
   }
 
   ionViewDidLoad() {
-      console.log("SAIU");
-      window.localStorage.clear();
-      this.navCtrl.setRoot(LoginPage);
+    console.log("SAIU");
+    window.localStorage.clear();
+    this.navCtrl.parent.parent.setRoot(LoginPage);
   }
+
+  // sair(){
+    
+  // }
 
 }

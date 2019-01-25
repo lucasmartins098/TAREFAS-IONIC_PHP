@@ -1,3 +1,5 @@
+import { MbscModule } from '@mobiscroll/angular';
+import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 import { CadastroTarefaPage } from './cadastro-tarefa';
@@ -6,7 +8,9 @@ import { CadastroTarefaPage } from './cadastro-tarefa';
   declarations: [
     CadastroTarefaPage,
   ],
-  imports: [
+  imports: [ 
+    MbscModule, 
+    FormsModule, 
     IonicPageModule.forChild(CadastroTarefaPage),
   ],
 })

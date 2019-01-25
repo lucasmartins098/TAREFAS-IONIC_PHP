@@ -22,12 +22,9 @@
     </ion-item>
     <ion-item>
       <ion-label floating>Senha</ion-label>
-      <ion-input type="password" name="senha" [(ngModel)]="dado.senha"></ion-input>
+      <ion-input type="text" name="senha" [(ngModel)]="dado.senha"></ion-input>
     </ion-item>
-    <button ion-button block (click)="login()">ENTRAR</button>
+    <button ion-button block (click)="login()">ENVIAR</button>
   </ion-list>
-  <ion-item>
-    <a href="#" (click)="signup()">Não tem conta ainda? <br/> Inscreva-se aqui!</a>
-  </ion-item>
 
 </ion-content>

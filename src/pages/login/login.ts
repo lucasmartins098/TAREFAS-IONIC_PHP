@@ -4,8 +4,6 @@ import { HttpHeaders } from '@angular/common/http';
 import { Http } from '@angular/http';
 import { CadastroTarefaPage } from '../cadastro-tarefa/cadastro-tarefa';
 import { TabsPage } from '../tabs/tabs';
-import { SingUpPage } from '../sing-up/sing-up';
-import { Storage } from '@ionic/storage';
 
 /**
  * Generated class for the LoginPage page.
@@ -26,39 +24,19 @@ export class LoginPage {
     , senha: ""
   };
   private baseURL: string = "http://localhost/apiParaIONIC/api.php/";
-  private data: any = { nome: "", login: "", token: "", idUsuario: "" };
+  private data: any = {nome : "", login : "", token : "", idUsuario : ""};
   public itens: Array<any> = [];
-  private token;
-  private retorno;
+
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
-    public toastCtrl: ToastController,
+    public toastCtrl: ToastController, 
     public http: Http) {
     console.log('kdsjkjd');
   }
 
   ionViewDidLoad() {
-    
-    this.token = window.localStorage.getItem('token');
-    let headers: any = new HttpHeaders({ 'Content-Type': 'application/json' }),
-      options: any = { "key": "verificarLogado", "token": this.token },
-      url: any = this.baseURL;
-    this.http.post(url, JSON.stringify(options), headers)
-      .subscribe((data: any) => {
-        this.retorno = data._body;
-        if(this.retorno == 1){
-       this.navCtrl.setRoot(TabsPage, { id: this.data.idUsuario });
-        }
-      },
-        (error: any) => {
-          console.log("ALGO ERRADO");
-        });
+    console.log('ionViewDidLoad LoginPage');
   }
-
-  // public verificarLogado(): boolean {
-    
-  // }
-
   /**
     * Faz Login na api0
     * 
@@ -78,6 +56,10 @@ export class LoginPage {
     console.log(this.dado.senha);
     this.http.post(url, JSON.stringify(options), headers)
       .subscribe((data: any) => {
+        //this.data.response = data["_body"];
+        //console.log(this.data.response);
+
+        //console.log(data["_body"].nome);
         console.dir(data);
         const retorno = data._body;
         console.log(retorno);
@@ -91,13 +73,19 @@ export class LoginPage {
           this.data.nome = this.itens["nome"];
           this.data.token = this.itens["token"];
           this.data.idUsuario = this.itens["idUsuario"];
-          window.localStorage.setItem('token', this.data.token);
-          window.localStorage.setItem('idUsuario', this.data.idUsuario);
+          //this.navCtrl.push(CadastroTarefaPage);
+          //this.navCtrl.push(CadastroTarefaPage, { id: this.itens });
+          //this.navParams.data({ id: this.data.idUsuario });
           this.navCtrl.setRoot(TabsPage, { id: this.data.idUsuario });
+          // console.log(this.itens.length);
+          // for (let i = 0; i <= this.itens.length; i++) {
+          //    console.log(this.itens[i]);
+          // }  
         }
-        else {
+        else{
           console.log("Usuário não existe!");
           this.sendNotification("Usuário não existe!");
+          //Fazer mensagem de usuário não existe!!
         }
       },
         (error: any) => {
@@ -105,17 +93,12 @@ export class LoginPage {
         });
   }
 
-  signup() {
-    //this.navCtrl.setRoot(SingUpPage);
-    this.navCtrl.push(SingUpPage);
-  }
-
   sendNotification(message: string): void {
     let notification = this.toastCtrl.create({
-      message: message,
-      duration: 2000
+       message: message,
+       duration: 3000
     });
     notification.present();
-  }
+ }
 
 }

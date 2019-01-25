@@ -5,6 +5,7 @@
   Ionic pages and navigation.
 -->
 <ion-header>
+
   <ion-navbar>
     <ion-title>Cadastrar Tarefa</ion-title>
   </ion-navbar>
@@ -16,7 +17,7 @@
 
   <ion-item>
     <ion-label>Favorito</ion-label>
-    <ion-checkbox [(ngModel)]="dado.favorito"></ion-checkbox>
+    <ion-checkbox checked=false [(ngModel)]="dado.favorito"></ion-checkbox>
   </ion-item>
   <ion-label>Título da tarefa</ion-label>
   <ion-item>
@@ -24,8 +25,7 @@
   </ion-item>
   <ion-label>Descrição</ion-label>
   <ion-item>
-    <!-- <ion-input type="text" [(ngModel)]="dado.descricao"></ion-input> -->
-    <ion-textarea placeholder="Descrição com limite de 500 caracteres." rows="6" cols="20" maxlength="500" [(ngModel)]="dado.descricao"></ion-textarea>
+    <ion-input type="text" [(ngModel)]="dado.descricao"></ion-input>
   </ion-item>
   <ion-label>Horário</ion-label>
   <ion-item>
@@ -33,19 +33,10 @@
   </ion-item>
   <ion-label>Dia</ion-label>
   <ion-item>
-    <!-- <ion-datetime displayFormat="DD/MMM/YYYY / DDDD" pickerFormat="DD/MMM/YYYY/DDDD" [(ngModel)]="event.month"></ion-datetime> -->
-      <!-- <mbsc-form [options]="formSettings"> -->
-        <!-- <div class="mbsc-grid mbsc-form-grid">
-          <div class="mbsc-row">
-            <div class="mbsc-col-sm-12 mbsc-col-md-6"> -->
-              <mbsc-calendar input-style="box" [(ngModel)]="data" dateFormat="dd/mm/yy" pickerFormat="dd/mm/yy" [options]="mobileSettings" placeholder="Selecione...">Dia</mbsc-calendar>
-            <!-- </div> -->
-            <!-- <div class="mbsc-col-sm-12 mbsc-col-md-6">
-              <mbsc-calendar [(ngModel)]="desktop" [options]="desktopSettings" placeholder="Please Select...">Desktop</mbsc-calendar>
-            </div> -->
-          <!-- </div>
-        </div> -->
-      <!-- </mbsc-form> -->
+    <ion-datetime displayFormat="YYYY MMM DD DDDD" pickerFormat="YYYY MMM DD DDD" [(ngModel)]="event.month"></ion-datetime>
+  </ion-item>
+  <ion-item>
+
   </ion-item>
   <button ion-button color="secondary" block (click)="cadastrarTarefa()">
     Adicionar

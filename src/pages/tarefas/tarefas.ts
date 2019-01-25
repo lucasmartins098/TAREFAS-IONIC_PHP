@@ -3,7 +3,6 @@ import { IonicPage, NavController, NavParams, ToastController, AlertController }
 import { Http } from '@angular/http';
 import { HttpHeaders } from '@angular/common/http';
 import { VisualizarEditarTarefaPage } from '../visualizar-editar-tarefa/visualizar-editar-tarefa';
-import { LoginPage } from '../login/login';
 
 /**
  * Generated class for the TarefasPage page.
@@ -21,13 +20,11 @@ export class TarefasPage {
 
   private baseURL: string = "http://localhost/apiParaIONIC/api.php/";
   public itens: Array<any> = [];
-  private token;
-  private retorno;
   public itensFavoritos: Array<any> = [];
   public itensRealizados: Array<any> = [];
   private data: any = { nome: "", login: "", token: "", idUsuario: "" };
   public dado: any = {
-    idUsuario: window.localStorage.getItem('idUsuario'),
+    idUsuario: this.NP.get('idUsuario'),
     IdTarefa: ""
   };
 
@@ -42,30 +39,7 @@ export class TarefasPage {
     this.carregarTarefas();
     this.carregarTarefasFavoritas();
     this.carregarTarefasRealizadas();
-
-
-    this.token = window.localStorage.getItem('token');
-    let headers: any = new HttpHeaders({ 'Content-Type': 'application/json' }),
-      options: any = { "key": "verificarLogado", "token": this.token },
-      url: any = this.baseURL;
-    this.http.post(url, JSON.stringify(options), headers)
-      .subscribe((data: any) => {
-        this.retorno = data._body;
-        if(this.retorno != 1){
-          this.sendNotification("Faça login para acessar o sistema", 2000);
-       this.navCtrl.setRoot(LoginPage);
-        }
-      },
-        (error: any) => {
-          console.log("ALGO ERRADO");
-        });
   }
-
-  ionViewDidLoad() {
-    this.sendNotification("Clique no tipo de tarefa desejada.",6000);
-  }
-
-  
 
   carregarTarefas(): void {
     let headers: any = new HttpHeaders({ 'Content-Type': 'application/json' }),
@@ -78,6 +52,7 @@ export class TarefasPage {
       .subscribe((data: any) => {
         //this.data.response = data["_body"];
         //console.log(this.data.response);
+
         //console.log(data["_body"].nome);
         console.dir(data);
         const retorno = data._body;
@@ -165,26 +140,26 @@ export class TarefasPage {
 
   showConfirmAlert(item) {
     const confirm = this.alertCtrl.create({
-      title: 'Excluir tarefa permanentemente',
-      message: 'Deseja excluir tarefa?',
-      buttons: [
-        {
-          text: 'Não',
-          handler: () => {
-            console.log('Não');
-          }
-        },
-        {
-          text: 'Sim',
-          handler: () => {
-            console.log('Sim');
-            console.log(item);
+       title: 'Excluir tarefa permanentemente',
+       message: 'Deseja excluir tarefa?',
+       buttons: [
+         {
+           text: 'Não',
+           handler: () => {
+             console.log('Não');
+           }
+         },
+         {
+           text: 'Sim',
+           handler: () => {
+             console.log('Sim');
+             console.log(item);
             this.deletarTarefa(item);
-          }
-        }
-      ]
-    });
-    confirm.present();
+           }
+         }
+       ]
+     });
+     confirm.present();
   }
 
   deletarTarefa(tarefa) {
@@ -196,13 +171,13 @@ export class TarefasPage {
     this.http
       .post(url, JSON.stringify(options), headers)
       .subscribe(data => {
-        this.sendNotification(data["_body"], 2000);
+        this.sendNotification(data["_body"]);
         console.log(data["_body"]);
         this.carregarTarefas();
       },
         (error: any) => {
-          this.sendNotification('Não deletado',2000);
-        });
+          this.sendNotification('Não deletado');
+       });
   }
 
   abrirParaVisualizarEditar(item) {
@@ -214,14 +189,12 @@ export class TarefasPage {
     this.navCtrl.push(VisualizarEditarTarefaPage, { idTarefa: item.idTarefa, nome: item.nome, descricao: item.descricao, data: item.data, horario: item.horario, favorito: item.favorito });
   }
 
-  sendNotification(message: string, duration: number): void {
+  sendNotification(message: string): void {
     let notification = this.toastCtrl.create({
       message: message,
-      duration: duration
+      duration: 3000
     });
     notification.present();
   }
-
-  
 
 }

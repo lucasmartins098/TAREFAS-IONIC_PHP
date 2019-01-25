@@ -3,14 +3,9 @@ import { IonicPage, NavController, NavParams, ToastController, ModalController, 
 import { Http } from '@angular/http';
 import { HttpHeaders } from '@angular/common/http';
 import { TabsPage } from '../tabs/tabs';
-import { LoginPage } from '../login/login';
+import { Calendar } from 'ionic3-calendar-neo-ptbr/src/calendar/calendar';
 import * as moment from 'moment';
-import { mobiscroll, MbscCalendarOptions, MbscFormOptions, MbscDatetimeOptions } from '@mobiscroll/angular';
 
-mobiscroll.settings = {
-  lang: 'pt-BR',
-  theme: 'ios'
-};
 /**
  * Generated class for the CadastroTarefaPage page.
  *
@@ -25,28 +20,6 @@ mobiscroll.settings = {
 })
 export class CadastroTarefaPage {
 
-  data: any;
-  desktop: Date;
-
-  mobileSettings: MbscCalendarOptions = {
-    display: 'bubble'
-  };
-
-  desktopSettings: MbscCalendarOptions = {
-    display: 'bubble',
-    touchUi: false
-  };
-
-  
-
-  formSettings: MbscFormOptions = {
-    inputStyle: 'box'
-  };
-
-  // teste: MbscDatetimeOptions = {
-    
-  // }
-
   public idUsuario: any;
 
   eventSource = [];
@@ -58,8 +31,7 @@ export class CadastroTarefaPage {
     locale: 'pt-br',
     currentDate: new Date()
   };
-  private token;
-  private retorno;
+
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
@@ -68,90 +40,77 @@ export class CadastroTarefaPage {
   }
 
 
-  public teste: MbscDatetimeOptions;
-  public dado: any = { nome: "", descricao: "", data: "", horario: "", favorito: true, idUsuario: window.localStorage.getItem('idUsuario') };
+
+  public dado: any = { nome: "", descricao: "", data: "", horario: "", favorito: true, idUsuario: this.navParams.get('idUsuario') };
   private baseURL = "http://localhost/apiParaIONIC/api.php/";
   public itens: Array<any> = [];
 
-  ionViewDidEnter() {
-
-    console.log("///TESTE DOS HORARIOS/////");
-    console.log('dia: ' + moment().days());
-    console.log('mes: ' + moment().months());
-    console.log('ano: ' + moment().year());
-    console.log('hora: ' + moment().hour());
-    console.log('minutos: ' + moment().minutes());
-    console.log('calendario: ' + moment().calendar());
-    console.log("///TESTE DOS HORARIOS/////");
-
-
+  ionViewDidLoad() {
     console.log('ionViewDidLoad CadastroTarefaPage');
-    this.dado = { nome: "", descricao: "", data: "", horario: "", favorito: true, idUsuario: window.localStorage.getItem('idUsuario') }
     console.log(this.dado.idUsuario);
+  }
 
-    this.token = window.localStorage.getItem('token');
+  public event = {
+    month: '1990-02-19',
+    timeStarts: '07:43',
+    timeEnds: '1990-02-20'
+  }
+
+  cadastrarTarefa() {
     let headers: any = new HttpHeaders({ 'Content-Type': 'application/json' }),
-      options: any = { "key": "verificarLogado", "token": this.token },
+      options: any = {
+        "key": "cadastrarTarefa", "nome": this.dado.nome, "descricao": this.dado.descricao, "data": this.event.month,
+        "horario": this.event.timeStarts, "favorito": this.dado.favorito, "idUsuario": this.dado.idUsuario
+      },
       url: any = this.baseURL;
-    console.log(JSON.stringify(options));
+    console.log("Passou pela função");
+    console.log("FAVORITO");
+    console.log(this.dado.favorito);
+    console.log("FAVORITO");
+    console.log(this.dado.descricao);
+    console.log("Data: " + this.event.month);
+    console.log("Horário: " + this.event.timeStarts);
     this.http.post(url, JSON.stringify(options), headers)
       .subscribe((data: any) => {
-        this.retorno = data._body;
-        if (this.retorno != 1) {
-          this.sendNotification("Faça login para acessar o sistema");
-          this.navCtrl.setRoot(LoginPage);
-        }
+        //this.data.response = data["_body"];
+        //console.log(this.data.response);
+        //console.log(data["_body"].nome);
+        console.dir(data);
+        const retorno = data._body;
+        console.log(retorno);
+        //this.itens = JSON.parse(data._body);
+        //console.log("itens");
+        console.log(retorno);
+        // console.log(this.itens.length);
+        // for (let i = 0; i <= this.itens.length; i++) {
+        //    console.log(this.itens[i]);
+        // }  
+        this.sendNotification("Tarefa cadastrada com sucesso");
       },
         (error: any) => {
           console.log("ALGO ERRADO");
         });
   }
 
-  public event = {
-    month: moment().days() + '-' + moment().months() + 1 + '-' + moment().year(),//moment().day()+'/'+moment().month()+1+'/'+moment().year(),//'1990-02-19',
-    timeStarts: moment().hour() + ':' + moment().minutes(),
-    timeEnds: '1990-02-20'
-  }
 
-  cadastrarTarefa() {
-    //console.log("DIA agrrr: "+this.teste.calendarSystem);
-
-    console.log("data com PLUGIN: "+this.data);
-    if (this.dado.descricao != "" && this.dado.nome != "") {
-
-      let headers: any = new HttpHeaders({ 'Content-Type': 'application/json' }),
-        options: any = {
-          "key": "cadastrarTarefa", "nome": this.dado.nome, "descricao": this.dado.descricao, "data": this.data,
-          "horario": this.event.timeStarts, "favorito": this.dado.favorito, "idUsuario": this.dado.idUsuario
-        },
-        url: any = this.baseURL;
-      console.log("Passou pela função");
-      console.log("FAVORITO");
-      console.log(this.dado.favorito);
-      console.log("FAVORITO");
-      console.log(this.dado.descricao);
-      console.log("Data: " + this.event.month);
-      console.log("Horário: " + this.event.timeStarts);
-      this.http.post(url, JSON.stringify(options), headers)
-        .subscribe((data: any) => {
-          console.dir(data);
-          const retorno = data._body;
-          console.log(retorno);
-          this.sendNotification("Tarefa cadastrada com sucesso.");
-        },
-          (error: any) => {
-            console.log("ALGO ERRADO.");
-          });
+  currentEvents = [
+    {
+      year: 2017,
+      month: 11,
+      date: 25
+    },
+    {
+      year: 2017,
+      month: 11,
+      date: 26
     }
-    else {
-      this.sendNotification("Não deixe nenhum campo em branco.");
-    }
-  }
+  ];
+
 
   sendNotification(message: string): void {
     let notification = this.toastCtrl.create({
       message: message,
-      duration: 2000
+      duration: 3000
     });
     notification.present();
   }

@@ -1,3 +1,5 @@
+import { MbscModule } from '@mobiscroll/angular';
+import { FormsModule } from '@angular/forms';
 import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
@@ -16,8 +18,12 @@ import { CadastroTarefaPage } from '../pages/cadastro-tarefa/cadastro-tarefa';
 import { CadastroTarefaPageModule } from '../pages/cadastro-tarefa/cadastro-tarefa.module';
 import { TarefasPage } from '../pages/tarefas/tarefas';
 import { VisualizarEditarTarefaPageModule } from '../pages/visualizar-editar-tarefa/visualizar-editar-tarefa.module';
+import { SingUpPageModule } from '../pages/sing-up/sing-up.module';
+import { IonicStorageModule } from '@ionic/storage';
+import { SairPage } from '../pages/sair/sair';
 import { CalendarModule } from 'ionic3-calendar-neo-ptbr';
-import { NgCalendarModule } from 'ionic2-calendar';
+import { VisualizarEditarTarefaPage } from '../pages/visualizar-editar-tarefa/visualizar-editar-tarefa';
+//import { NgCalendarModule  } from 'ionic2-calendar';
 
 @NgModule({
   declarations: [
@@ -27,20 +33,32 @@ import { NgCalendarModule } from 'ionic2-calendar';
     HomePage,
     CadastroTarefaPage,
     TarefasPage,
-    TabsPage
+    SairPage,
+    TabsPage,
+    VisualizarEditarTarefaPage
   ],
-  imports: [
+  imports: [ 
+    //NgCalendarModule,
+    MbscModule, 
+    FormsModule,
+    CalendarModule,
     BrowserModule,
     IonicModule.forRoot(MyApp, {
       monthNames: ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"],
       monthShortNames: ['Jan', 'Fev', 'Mar', "Abr", "Mai", "Jun", "Jul", "Ago", "Sep", "Out", "Nov", "Dez"],
       dayShortNames: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'],
+      dayNames: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],
+      backButtonText: "Voltar",
+      doneText: 'Feito',
+      cancelText: 'Cancelar',
     }),
-    NgCalendarModule,
+    IonicStorageModule.forRoot({
+      name: '__mydb',
+         driverOrder: ['indexeddb', 'sqlite', 'websql']
+    }),
     HttpModule,
-    CalendarModule,
     LoginPageModule,
-    VisualizarEditarTarefaPageModule
+    SingUpPageModule
     // CadastroTarefaPageModule
   ],
   bootstrap: [IonicApp],
@@ -51,7 +69,9 @@ import { NgCalendarModule } from 'ionic2-calendar';
     HomePage,
     CadastroTarefaPage,
     TarefasPage,
-    TabsPage
+    SairPage,
+    TabsPage,
+    VisualizarEditarTarefaPage
   ],
   providers: [
     StatusBar,

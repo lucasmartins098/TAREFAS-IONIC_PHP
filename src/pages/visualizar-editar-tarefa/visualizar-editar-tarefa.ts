@@ -43,13 +43,46 @@ export class VisualizarEditarTarefaPage {
     realizada: false
   };
 
+  selecionarDia(event){
+    console.log("EVENTO: "+event.date + "-" +(event.month+1)+ "-" +event.year);
+    this.event.month = event.year + "-" +(event.month+1)+ "-" +event.date;
+    console.log(this.event.month);
+  }
+  //month:any = this.navParams.get('data');
+  myDate:any  = new Date().toISOString();
+
+
   public event = {
     month: this.navParams.get('data'),
     timeStarts: this.navParams.get('horario'),
     timeEnds: this.navParams.get('horario')
   }
+  public mes;
+  public ano;
+  public dia;
+
+  calendario={ano:2000,mes:1,dia:1};
+  converterData(){
+   //this.event.month = "2019-01-02";
+   let data = this.navParams.get('data').split("-");
+   this.ano = data[0];
+   this.mes = data[1];
+   this.dia = data[2];
+   this.calendario.ano = Number(this.ano);
+   this.calendario.mes = (Number(this.mes)-1);
+   this.calendario.dia = Number(this.dia);
+   console.log("Função converter INICIO");
+   console.log(this.event.month);
+   console.log(data);
+   console.log(this.navParams.get('data'));
+   console.log("ano: "+this.calendario.ano);
+   console.log("mes: "+this.calendario.mes);
+   console.log("dia: "+this.calendario.dia);
+   console.log("Função converter FIM ");
+  }
 
   ionViewDidEnter() {
+    this.converterData();
     console.log("Construtor nOME: " + this.navParams.get('nome') + " " +this.tarefaJson.nome);
     console.log("Construtor DESC: " + this.navParams.get('descricao')+" " + this.tarefaJson.descricao);
     console.log("Construtor Favorito: " + this.navParams.get('favorito') +" " + this.tarefaJson.favorito);
@@ -60,8 +93,6 @@ export class VisualizarEditarTarefaPage {
   }
 
   editarTarefa(): void {
-    console.log(this.tarefa["idTarefa"]);
-    console.log(this.tarefa["nome"]);
     let headers: any = new HttpHeaders({ 'Content-Type': 'application/json' }),
       options: any = {
         "key": "editarTarefa", "nome": this.tarefaJson.nome, "idTarefa": this.navParams.get('idTarefa'),
@@ -88,7 +119,7 @@ export class VisualizarEditarTarefaPage {
   sendNotification(message: string): void {
     let notification = this.toastCtrl.create({
       message: message,
-      duration: 3000
+      duration: 2000
     });
     notification.present();
   }

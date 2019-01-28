@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams, ToastController, AlertController }
 import { TarefasPage } from '../tarefas/tarefas';
 import { HttpHeaders } from '@angular/common/http';
 import { Http } from '@angular/http';
+import * as $ from "jquery";
 
 /**
  * Generated class for the VisualizarEditarTarefaPage page.
@@ -22,7 +23,7 @@ export class VisualizarEditarTarefaPage {
     public alertCtrl: AlertController, public http: Http) {
   }
 
-  private baseURL = "http://localhost/apiParaIONIC/api.php/";
+  private baseURL = "http://tarefasapi.000webhostapp.com/apiParaIONIC/api.php/";
   public tarefa: Array<any> = [{
     nome: this.navParams.get('nome'),
     descricao: this.navParams.get('descricao'),
@@ -51,6 +52,10 @@ export class VisualizarEditarTarefaPage {
   //month:any = this.navParams.get('data');
   myDate:any  = new Date().toISOString();
 
+  ngAfterViewInit(){
+    this.converterData();
+      $('#idBotao').trigger('click');
+  }
 
   public event = {
     month: this.navParams.get('data'),
@@ -79,18 +84,20 @@ export class VisualizarEditarTarefaPage {
    console.log("mes: "+this.calendario.mes);
    console.log("dia: "+this.calendario.dia);
    console.log("Função converter FIM ");
+   //$('#idBotao').trigger('click');
+   console.log("PASSOU PELO JQUERY");
   }
 
-  ionViewDidEnter() {
-    this.converterData();
-    console.log("Construtor nOME: " + this.navParams.get('nome') + " " +this.tarefaJson.nome);
-    console.log("Construtor DESC: " + this.navParams.get('descricao')+" " + this.tarefaJson.descricao);
-    console.log("Construtor Favorito: " + this.navParams.get('favorito') +" " + this.tarefaJson.favorito);
-    console.log("Construtor ID: " + this.navParams.get('idTarefa') + " " +this.tarefaJson.idTarefa);
-    console.log("Construtor Realizada: " + this.navParams.get('realizada') +" " + this.tarefaJson.realizada);
-    console.log("Construtor data: " + this.navParams.get('data') + " " +this.tarefaJson.data);
-    console.log("Construtor horario: " + this.navParams.get('horario') + " " +this.tarefaJson.horario);
-  }
+  // ionViewDidEnter() {
+  //   console.log("Construtor nOME: " + this.navParams.get('nome') + " " +this.tarefaJson.nome);
+  //   console.log("Construtor DESC: " + this.navParams.get('descricao')+" " + this.tarefaJson.descricao);
+  //   console.log("Construtor Favorito: " + this.navParams.get('favorito') +" " + this.tarefaJson.favorito);
+  //   console.log("Construtor ID: " + this.navParams.get('idTarefa') + " " +this.tarefaJson.idTarefa);
+  //   console.log("Construtor Realizada: " + this.navParams.get('realizada') +" " + this.tarefaJson.realizada);
+  //   console.log("Construtor data: " + this.navParams.get('data') + " " +this.tarefaJson.data);
+  //   console.log("Construtor horario: " + this.navParams.get('horario') + " " +this.tarefaJson.horario);
+  //   //$('#idBotao').trigger('click');
+  // }
 
   editarTarefa(): void {
     let headers: any = new HttpHeaders({ 'Content-Type': 'application/json' }),

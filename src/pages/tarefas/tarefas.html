@@ -12,14 +12,14 @@
 
   <ion-toolbar no-border-top>
     <ion-segment [(ngModel)]="tarefas">
-      <ion-segment-button value="geral">
+      <ion-segment-button id="segmentGeral" value="geral">
         Geral
       </ion-segment-button>
       <ion-segment-button value="favoritos">
-        Favoritas
+        Favoritas<ion-icon id="favorito" name="star" icon-start clear small></ion-icon>
       </ion-segment-button>
       <ion-segment-button value="historico">
-        Realizadas
+        Realizadas <ion-icon name="checkmark-circle-outline" id="realizada" color="secondary"></ion-icon>
       </ion-segment-button>
     </ion-segment>
   </ion-toolbar>
@@ -28,12 +28,45 @@
 
 <ion-content padding>
 
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+
   <div [ngSwitch]="tarefas">
     <ion-list *ngSwitchCase="'geral'">
       <ion-item *ngFor="let item of itens">
         <ion-card>
 
-          <ion-item>
+          <ion-item *ngIf="item.realizada == 1 && item.favorito == 1">
+            <h2 align="center">
+              <font color="green">{{item.nome}}</font>
+            </h2>
+            <p>Dia: {{item.data}}</p>
+            <p>Horário: {{item.horario}}</p>
+            <ion-icon name="checkmark-circle-outline" color="secondary"></ion-icon>
+            <ion-icon id="favorito" name="star"></ion-icon>
+          </ion-item>
+
+          <ion-item *ngIf="item.realizada == 1 && item.favorito != 1">
+            <h2 align="center">
+              <font color="green">{{item.nome}}</font>
+            </h2>
+            <p>Dia: {{item.data}}</p>
+            <p>Horário: {{item.horario}}</p>
+            <ion-icon name="checkmark-circle-outline" color="secondary"></ion-icon>
+          </ion-item>
+
+          <ion-item *ngIf="item.favorito == 1 && item.realizada != 1">
+            <h2 align="center">
+              <font color="green">{{item.nome}}</font>
+            </h2>
+            <p>Dia: {{item.data}}</p>
+            <p>Horário: {{item.horario}}</p>
+            <ion-icon name="star" id="favorito"></ion-icon>
+          </ion-item>
+          
+          <ion-item *ngIf="item.realizada != 1 && item.favorito != 1">
             <h2 align="center">
               <font color="green">{{item.nome}}</font>
             </h2>

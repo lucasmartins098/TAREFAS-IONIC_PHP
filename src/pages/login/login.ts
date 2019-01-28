@@ -25,7 +25,7 @@ export class LoginPage {
     login: ""
     , senha: ""
   };
-  private baseURL: string = "http://localhost/apiParaIONIC/api.php/";
+  private baseURL: string = "http://tarefasapi.000webhostapp.com/apiParaIONIC/api.php/";
   private data: any = { nome: "", login: "", token: "", idUsuario: "" };
   public itens: Array<any> = [];
   private token;
@@ -38,7 +38,6 @@ export class LoginPage {
   }
 
   ionViewDidLoad() {
-    
     this.token = window.localStorage.getItem('token');
     let headers: any = new HttpHeaders({ 'Content-Type': 'application/json' }),
       options: any = { "key": "verificarLogado", "token": this.token },
@@ -82,6 +81,8 @@ export class LoginPage {
         const retorno = data._body;
         console.log(retorno);
         if (retorno != 0) {
+          console.log("Entrou na função: ");
+          console.log(data._body);
           this.itens = JSON.parse(data._body);
           console.log("itens");
           console.log(this.itens);

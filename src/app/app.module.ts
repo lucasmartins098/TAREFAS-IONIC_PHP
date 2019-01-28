@@ -1,4 +1,3 @@
-import { MbscModule } from '@mobiscroll/angular';
 import { FormsModule } from '@angular/forms';
 import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -23,7 +22,8 @@ import { IonicStorageModule } from '@ionic/storage';
 import { SairPage } from '../pages/sair/sair';
 import { CalendarModule } from 'ionic3-calendar-neo-ptbr';
 import { VisualizarEditarTarefaPage } from '../pages/visualizar-editar-tarefa/visualizar-editar-tarefa';
-//import { NgCalendarModule  } from 'ionic2-calendar';
+import { ConfigProvider } from '../providers/config/config';
+import { IntroPageModule } from '../pages/intro/intro.module';
 
 @NgModule({
   declarations: [
@@ -38,10 +38,9 @@ import { VisualizarEditarTarefaPage } from '../pages/visualizar-editar-tarefa/vi
     VisualizarEditarTarefaPage
   ],
   imports: [ 
-    //NgCalendarModule,
-    MbscModule, 
     FormsModule,
     CalendarModule,
+    IntroPageModule,
     BrowserModule,
     IonicModule.forRoot(MyApp, {
       monthNames: ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"],
@@ -76,7 +75,8 @@ import { VisualizarEditarTarefaPage } from '../pages/visualizar-editar-tarefa/vi
   providers: [
     StatusBar,
     SplashScreen,
-    { provide: ErrorHandler, useClass: IonicErrorHandler }
+    { provide: ErrorHandler, useClass: IonicErrorHandler },
+    ConfigProvider
   ]
 })
 export class AppModule { }

@@ -53,7 +53,7 @@
       <ion-calendar #calendar (onDaySelect)="selecionarDia($event)"></ion-calendar>
     </ion-item>
     <button ion-button block (click)="editarTarefa()">EDITAR</button>
-    <button ion-button id="carregarData" (click)="calendar.today(calendario.ano,calendario.mes,calendario.dia)">Ir para data</button>
+    <button ion-button hidden id="idBotao" (click)="calendar.today(calendario.ano,calendario.mes,calendario.dia)">Ir para data</button>
 
     
   </ion-list>

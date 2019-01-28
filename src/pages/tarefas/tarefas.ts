@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ToastController, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ToastController, AlertController, LoadingController } from 'ionic-angular';
 import { Http } from '@angular/http';
 import { HttpHeaders } from '@angular/common/http';
 import { VisualizarEditarTarefaPage } from '../visualizar-editar-tarefa/visualizar-editar-tarefa';
 import { LoginPage } from '../login/login';
+import * as $ from "jquery";
 
 /**
  * Generated class for the TarefasPage page.
@@ -19,7 +20,7 @@ import { LoginPage } from '../login/login';
 })
 export class TarefasPage {
 
-  private baseURL: string = "http://localhost/apiParaIONIC/api.php/";
+  private baseURL: string = "http://tarefasapi.000webhostapp.com/apiParaIONIC/api.php/";
   public itens: Array<any> = [];
   private token;
   private retorno;
@@ -35,15 +36,13 @@ export class TarefasPage {
     public http: Http,
     public NP: NavParams,
     public toastCtrl: ToastController,
-    public alertCtrl: AlertController) {
+    public alertCtrl: AlertController,
+    public loadingCtrl: LoadingController) {
   }
 
   ionViewDidEnter() {
-    this.carregarTarefas();
-    this.carregarTarefasFavoritas();
-    this.carregarTarefasRealizadas();
-
-
+    this.carregarTiposDeTarefas();
+    $('#segmentGeral').trigger('click');
     this.token = window.localStorage.getItem('token');
     let headers: any = new HttpHeaders({ 'Content-Type': 'application/json' }),
       options: any = { "key": "verificarLogado", "token": this.token },
@@ -51,9 +50,9 @@ export class TarefasPage {
     this.http.post(url, JSON.stringify(options), headers)
       .subscribe((data: any) => {
         this.retorno = data._body;
-        if(this.retorno != 1){
+        if (this.retorno != 1) {
           this.sendNotification("Faça login para acessar o sistema", 2000);
-       this.navCtrl.setRoot(LoginPage);
+          this.navCtrl.setRoot(LoginPage);
         }
       },
         (error: any) => {
@@ -61,11 +60,19 @@ export class TarefasPage {
         });
   }
 
-  ionViewDidLoad() {
-    this.sendNotification("Clique no tipo de tarefa desejada.",6000);
+  ngAfterViewInit() {
+    $('#segmentGeral').trigger('click');
   }
 
-  
+  ionViewDidLoad() {
+    //this.sendNotification("Clique no tipo de tarefa desejada.",6000);
+    this.instruirUsuario();
+    $('#segmentGeral').trigger('click');
+  }
+
+  Fechaloading() {
+    this.loader.dismiss();
+  }
 
   carregarTarefas(): void {
     let headers: any = new HttpHeaders({ 'Content-Type': 'application/json' }),
@@ -81,7 +88,7 @@ export class TarefasPage {
         //console.log(data["_body"].nome);
         console.dir(data);
         const retorno = data._body;
-        console.log(retorno);
+        console.log("VER ESSE CONSOLE: "+retorno);
         this.itens = JSON.parse(data._body);
         this.data = JSON.parse(data._body);
         console.log("itens");
@@ -97,10 +104,22 @@ export class TarefasPage {
         for (let i = 0; i <= this.itens.length; i++) {
           console.log(this.itens[i]);
         }
+        if (this.isrefresher) {
+          this.refresher.complete();
+          this.isrefresher = false;
+        }
       },
         (error: any) => {
           console.log("ALGO ERRADO");
         });
+  }
+  public loader;
+
+  AbreLoading() {
+    this.loader = this.loadingCtrl.create({
+      content: "Carregando"
+    });
+    this.loader.present();
   }
 
   carregarTarefasFavoritas(): void {
@@ -162,6 +181,13 @@ export class TarefasPage {
           console.log("ALGO ERRADO");
         });
   }
+  public refresher;
+  public isrefresher: boolean = false;
+  doRefresh(refresher) {
+    this.refresher = refresher;
+    this.isrefresher = true;
+    this.carregarTiposDeTarefas();
+  }
 
   showConfirmAlert(item) {
     const confirm = this.alertCtrl.create({
@@ -180,6 +206,7 @@ export class TarefasPage {
             console.log('Sim');
             console.log(item);
             this.deletarTarefa(item);
+            this.carregarTiposDeTarefas();
           }
         }
       ]
@@ -198,11 +225,20 @@ export class TarefasPage {
       .subscribe(data => {
         this.sendNotification(data["_body"], 2000);
         console.log(data["_body"]);
-        this.carregarTarefas();
+        this.carregarTiposDeTarefas();
       },
         (error: any) => {
-          this.sendNotification('Não deletado',2000);
+          this.sendNotification('Aconteceu algo, a tarefa não foi deletada', 2000);
         });
+  }
+
+
+  carregarTiposDeTarefas() {
+    this.AbreLoading();
+    this.carregarTarefas();
+    this.carregarTarefasFavoritas();
+    this.carregarTarefasRealizadas();
+    this.Fechaloading();
   }
 
   abrirParaVisualizarEditar(item) {
@@ -222,6 +258,20 @@ export class TarefasPage {
     notification.present();
   }
 
-  
-
+  instruirUsuario() {
+    const confirm = this.alertCtrl.create({
+      title: 'Instrução',
+      message: 'Para ver as suas tarefas você deve selecionar o tipo da tarefa nas abas acima.(GERAL/FAVORITAS/REALIZADAS)',
+      buttons: [
+        {
+          text: 'Compreendido',
+          handler: () => {
+            console.log('Compreendido');
+            $('#segmentGeral').trigger('click');
+          }
+        }
+      ]
+    });
+    confirm.present();
+  }
 }

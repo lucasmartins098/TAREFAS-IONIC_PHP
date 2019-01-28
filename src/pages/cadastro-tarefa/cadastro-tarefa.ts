@@ -6,6 +6,8 @@ import { TabsPage } from '../tabs/tabs';
 import { LoginPage } from '../login/login';
 import * as moment from 'moment';
 import { Calendar } from 'ionic3-calendar-neo-ptbr/src/calendar/calendar';
+import * as $ from "jquery";
+
 
 
 /**
@@ -26,17 +28,6 @@ export class CadastroTarefaPage {
 
   data: any;
   desktop: Date;
-
- //calendar2 : Calendar; // = {
-//   currentDate: 1,
-//   currentMonth: 1
-// };
-  // this.calendar2.currentDate = 24;
-  //   this.calendar2.currentYear = 2019;
-  //   this.calendar2.currentMonth = 1;
-
-  calendario={ano:moment().year(),mes:moment().month(),dia:12};//dia:moment().date()
-  
   
   public idUsuario: any;
 
@@ -44,11 +35,6 @@ export class CadastroTarefaPage {
   viewTitle: string;
   noEventsLabel: string = "Não há eventos listados";
   selectedDay = new Date();
-  // calendar = {
-  //   mode: 'month',
-  //   locale: 'pt-br',
-  //   currentDate: new Date(2019, 1, 1)
-  // };
   private token;
   private retorno;
 
@@ -56,54 +42,40 @@ export class CadastroTarefaPage {
     public navParams: NavParams,
     public toastCtrl: ToastController,
     public http: Http) {
-      //this.calendar2.currentDate = 1;
-      //this.calendar2.displayYear = 2020; //currentYear = 1;
-      // this.calendar2.currentMonth = 1;
-      // this.calendar2.currentDay = 1;
-      // this.calendar2.today;
-      //this.calendar2
+      
   }
+  calendario={ano:moment().year(),mes:moment().month(),dia:moment().date()};
 
-
+  ngAfterViewInit(){
+    console.log("ANO: "+this.calendario.ano);
+    console.log("MES: "+this.calendario.mes);
+    console.log("DIA: "+this.calendario.dia);
+    $('#idBotao2').trigger('click');
+      console.log("VIEW INI CADASTRO");
+  }
+  ionViewWillUnload(){
+    $('#idBotao2').trigger('click');
+  }
   public dado: any = { nome: "", descricao: "", data: "", horario: "", favorito: true, idUsuario: window.localStorage.getItem('idUsuario') };
-  private baseURL = "http://localhost/apiParaIONIC/api.php/";
+  private baseURL = "http://tarefasapi.000webhostapp.com/apiParaIONIC/api.php/";
   public itens: Array<any> = [];
 
-  
+  ionViewDidLoad(){
+    this.calendario={ano:moment().year(),mes:moment().month(),dia:moment().date()};
+    $('#idBotao2').trigger('click');
+    console.log("aqui");
+  }
 
+  ionViewWillEnter(){
+    $('#idBotao2').trigger('click');
+  }
 
   ionViewDidEnter() {
-    let s = "35";
-    let q = s + 1;
-    let n = +s;
-    let teste5 = s;
-    let teste2 = Number(s);
-    let teste3 = teste2 + 1;
-
-    console.log("Conteudo "+teste5); //string
-    console.log("Conteudo "+q); //string
-    console.log("Conteudo "+teste2); //number
-    console.log("Conteudo "+teste3); //number
-    console.log(s, typeof s); //string
-    console.log(n, typeof n); //number
-
-    // this.currentEvents = [
-    //   {
-    //    year: 2017,
-    //    month: 12,
-    //    date: 25,
-    //    color: blue,
-    //    description: description,
-    //    time: 12:00
-    //   }
-    // ];
-
-    //this.calendar2.carregarDataEspecifica(2019,1,24);
-
-    //this.calendar2.currentDate = 21;
-
+    //this.calendario={ano:moment().year(),mes:moment().month(),dia:moment().date()};    
+    $('#idBotao2').trigger('click');
+    console.log("ENTER");
     console.log("///TESTE DOS HORARIOS/////");
-    console.log('dia: ' + moment().days());
+    console.log('dia: ' + moment().date());
     console.log('mes: ' + moment().months());
     console.log('ano: ' + moment().year());
     console.log('hora: ' + moment().hour());
@@ -112,7 +84,6 @@ export class CadastroTarefaPage {
     console.log('calendario: ' + moment().calendar());
     console.log("///TESTE DOS HORARIOS/////");
 
-    console.log('ionViewDidLoad CadastroTarefaPage');
     this.dado = { nome: "", descricao: "", data: "", horario: "", favorito: true, idUsuario: window.localStorage.getItem('idUsuario') }
     console.log(this.dado.idUsuario);
 
@@ -179,6 +150,7 @@ export class CadastroTarefaPage {
     console.log("EVENTO: "+event.date + "-" +(event.month+1)+ "-" +event.year);
     this.data = event.year + "-" +(event.month+1)+ "-" +event.date;
     console.log(this.data);
+    console.log("\\SELECIONAR DIA INICIADO://");
   }
 
   sendNotification(message: string): void {

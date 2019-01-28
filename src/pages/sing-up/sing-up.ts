@@ -17,8 +17,8 @@ import { HttpHeaders } from '@angular/common/http';
 })
 export class SingUpPage {
 
-  dado = {nome:"",login:"",senha:"",senhaConfirmada:""};
-  private baseURL = "http://localhost/apiParaIONIC/api.php/";
+  dado = { nome: "", login: "", senha: "", senhaConfirmada: "" };
+  private baseURL = "http://tarefasapi.000webhostapp.com/apiParaIONIC/api.php/";
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
@@ -31,31 +31,35 @@ export class SingUpPage {
   }
 
   cadastrarUsuario() {
-    if(this.dado.senha==this.dado.senhaConfirmada){
-      if(this.dado.senha != "" || this.dado.nome != "" || this.dado.login != ""){
-    let headers: any = new HttpHeaders({ 'Content-Type': 'application/json' }),
-      options: any = {
-        "key": "cadastrarUsuario", "nome": this.dado.nome, "login": this.dado.login, "senha": this.dado.senha
-      },
-      url: any = this.baseURL;
-    this.http.post(url, JSON.stringify(options), headers)
-      .subscribe((data: any) => {
-        console.dir(data);
-        const retorno = data._body;
-        console.log(retorno);
-        this.sendNotification(retorno);
-      },
-        (error: any) => {
-          console.log("ALGO ERRADO.");
-        });
+    console.log(this.dado.senha);
+    console.log(this.dado.login);
+    console.log(this.dado.nome);
+    console.log(this.dado.senhaConfirmada);
+    if (this.dado.senha == this.dado.senhaConfirmada) {
+      if (this.dado.senha != "" && this.dado.nome != "" && this.dado.login != "") {
+        let headers: any = new HttpHeaders({ 'Content-Type': 'application/json' }),
+          options: any = {
+            "key": "cadastrarUsuario", "nome": this.dado.nome, "login": this.dado.login, "senha": this.dado.senha
+          },
+          url: any = this.baseURL;
+        this.http.post(url, JSON.stringify(options), headers)
+          .subscribe((data: any) => {
+            console.dir(data);
+            const retorno = data._body;
+            console.log(retorno);
+            this.sendNotification(retorno);
+          },
+            (error: any) => {
+              console.log("ALGO ERRADO.");
+            });
       }
-      else{
-        this.sendNotification("Não deixe nenhum campos em branco.");
+      else {
+        this.sendNotification("Não deixe nenhum campo em branco.");
       }
-      }
-      else{
-        this.sendNotification("Senhas não coincidem.");
-      }
+    }
+    else {
+      this.sendNotification("Senhas não coincidem.");
+    }
   }
 
   sendNotification(message: string): void {

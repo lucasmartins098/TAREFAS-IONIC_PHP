@@ -17,8 +17,6 @@ export class TabsPage {
   tab5Root = TarefasPage;
   tab6Root = SairPage;
 
-  
-
   constructor(public navParams: NavParams) {
     
   }

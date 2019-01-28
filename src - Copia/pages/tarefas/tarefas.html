@@ -1,0 +1,117 @@
+<!--
+  Generated template for the TarefasPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar no-border-bottom>
+    <ion-title>Tipos de Tarefas</ion-title>
+  </ion-navbar>
+
+  <ion-toolbar no-border-top>
+    <ion-segment [(ngModel)]="tarefas">
+      <ion-segment-button value="geral">
+        Geral
+      </ion-segment-button>
+      <ion-segment-button value="favoritos">
+        Favoritas
+      </ion-segment-button>
+      <ion-segment-button value="historico">
+        Realizadas
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+
+</ion-header>
+
+<ion-content padding>
+  
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+
+  <div [ngSwitch]="tarefas">
+    <ion-list *ngSwitchCase="'geral'">
+      <ion-item *ngFor="let item of itens">
+        <ion-card>
+         
+
+          <ion-item>
+            <h2 align="center">
+              <font color="green">{{item.nome}}</font>
+            </h2>
+            <p>Dia: {{item.data}}</p>
+            <p>Horário: {{item.horario}}</p>
+          </ion-item>
+          <ion-row>
+            <ion-col>
+              <button ion-button icon-start clear small color="danger" (click)="showConfirmAlert(item)">
+                <ion-icon name="trash"></ion-icon>
+                <div>Deletar</div>
+              </button>
+            </ion-col>
+          </ion-row>
+          <button ion-button block (click)="abrirParaVisualizarEditar(item)">Detalhes</button>
+        </ion-card>
+      </ion-item>
+    </ion-list>
+
+    <ion-list *ngSwitchCase="'favoritos'">
+      <ion-item *ngFor="let item of itensFavoritos">
+        <ion-card>
+
+          <ion-item>
+            <h2 align="center">
+              <font color="green">{{item.nome}}</font>
+            </h2>
+            <p>Dia: {{item.data}}</p>
+            <p>Horário: {{item.horario}}</p>
+          </ion-item>
+          <!-- <ion-card-content>
+            <p>ssssss</p>
+          </ion-card-content> -->
+          <ion-row>
+            <ion-col>
+              <button ion-button icon-start clear small color="danger" (click)="showConfirmAlert(item)">
+                <ion-icon name="trash"></ion-icon>
+                <div>Deletar</div>
+              </button>
+            </ion-col>
+          </ion-row>
+          <button ion-button block (click)="abrirParaVisualizarEditar(item)">Detalhes</button>
+        </ion-card>
+      </ion-item>
+    </ion-list>
+
+    <ion-list *ngSwitchCase="'historico'">
+      <ion-item *ngFor="let item of itensRealizados">
+        <ion-card>
+
+          <ion-item>
+            <h2 align="center">
+              <font color="green">{{item.nome}}</font>
+            </h2>
+            <p>Dia: {{item.data}}</p>
+            <p>Horário: {{item.horario}}</p>
+          </ion-item>
+          <!-- <ion-card-content>
+            <p>ssssss</p>
+          </ion-card-content> -->
+          <ion-row>
+            <ion-col>
+              <button ion-button icon-start clear small color="danger" (click)="showConfirmAlert(item)">
+                <ion-icon name="trash"></ion-icon>
+                <div>Deletar</div>
+              </button>
+            </ion-col>
+          </ion-row>
+          <button ion-button block (click)="abrirParaVisualizarEditar(item)">Detalhes</button>
+        </ion-card>
+      </ion-item>
+    </ion-list>
+  </div>
+
+</ion-content>

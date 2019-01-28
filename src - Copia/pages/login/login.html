@@ -1,0 +1,33 @@
+<!--
+  Generated template for the LoginPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Login</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+  <ion-list>
+    <ion-item>
+      <ion-label floating>Login</ion-label>
+      <ion-input type="text" name="login" [(ngModel)]="dado.login"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Senha</ion-label>
+      <ion-input type="password" name="senha" [(ngModel)]="dado.senha"></ion-input>
+    </ion-item>
+    <button ion-button block (click)="login()">ENTRAR</button>
+  </ion-list>
+  <ion-item>
+    <a href="#" (click)="signup()">Não tem conta ainda? <br/> Inscreva-se aqui!</a>
+  </ion-item>
+
+</ion-content>

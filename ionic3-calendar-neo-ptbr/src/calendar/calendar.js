@@ -32,9 +32,9 @@ var Calendar = /** @class */ (function () {
         this.createMonth(this.displayYear, this.displayMonth);
     };
     Calendar.prototype.ngAfterViewInit = function () {
-        this.today(this.currentYear,this.currentMonth,this.currentDate);
+        // today(this.currentYear,this.currentMonth,this.currentDate);
         setTimeout(() => {
-            this.today(this.currentYear,this.currentMonth,this.currentDate);
+           // this.today(this.currentYear,this.currentMonth,this.currentDate);
             console.log("execute js");
          }, 1000);
     };

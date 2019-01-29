@@ -261,7 +261,7 @@ export class TarefasPage {
   instruirUsuario() {
     const confirm = this.alertCtrl.create({
       title: 'Instrução',
-      message: 'Para ver as suas tarefas você deve selecionar o tipo da tarefa nas abas acima.(GERAL/FAVORITAS/REALIZADAS)',
+      message: 'Para ver as suas tarefas você deve selecionar o tipo da tarefa nas abas acima. <br> TODAS/FAVORITAS/REALIZADAS',
       buttons: [
         {
           text: 'Compreendido',

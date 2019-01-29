@@ -25,7 +25,7 @@ export class IntroPage {
   }
 
   goToTabsPage(){
-    this.navCtrl.push(LoginPage)
+    this.navCtrl.setRoot(LoginPage)
   }
 
 }

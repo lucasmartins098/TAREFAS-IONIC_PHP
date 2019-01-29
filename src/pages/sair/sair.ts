@@ -21,12 +21,8 @@ export class SairPage {
 
   ionViewDidLoad() {
     console.log("SAIU");
-    window.localStorage.clear();
+    window.localStorage.setItem("token",null);
     this.navCtrl.parent.parent.setRoot(LoginPage);
   }
-
-  // sair(){
-    
-  // }
 
 }

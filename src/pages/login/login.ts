@@ -37,24 +37,7 @@ export class LoginPage {
     console.log('kdsjkjd');
   }
 
-  ionViewDidLoad() {
-    this.token = window.localStorage.getItem('token');
-    let headers: any = new HttpHeaders({ 'Content-Type': 'application/json' }),
-      options: any = { "key": "verificarLogado", "token": this.token },
-      url: any = this.baseURL;
-    this.http.post(url, JSON.stringify(options), headers)
-      .subscribe((data: any) => {
-        this.retorno = data._body;
-        if(this.retorno == 1){
-       this.navCtrl.setRoot(TabsPage, { id: this.data.idUsuario });
-        }
-      },
-        (error: any) => {
-          console.log("ALGO ERRADO");
-        });
-  }
-
-  // public verificarLogado(): boolean {
+  // ionViewDidLoad() {
     
   // }
 

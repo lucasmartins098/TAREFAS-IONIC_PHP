@@ -7,138 +7,133 @@
 <ion-header>
 
   <ion-navbar no-border-bottom>
-    <ion-title>Tipos de Tarefas</ion-title>
+    <ion-title>Tarefas</ion-title>
   </ion-navbar>
 
   <ion-toolbar no-border-top>
     <ion-segment [(ngModel)]="tarefas">
-      <ion-segment-button id="segmentGeral" value="geral">
-        Geral
+      <ion-segment-button icon-start clear small id="segmentGeral" value="geral">
+        <ion-icon id="geral">Todas</ion-icon>
       </ion-segment-button>
-      <ion-segment-button value="favoritos">
-        Favoritas<ion-icon id="favorito" name="star" icon-start clear small></ion-icon>
+      <ion-segment-button icon-start clear small value="favoritos">
+        <ion-icon id="favorito" name="star" icon-start clear small> Favoritas</ion-icon>
       </ion-segment-button>
-      <ion-segment-button value="historico">
-        Realizadas <ion-icon name="checkmark-circle-outline" id="realizada" color="secondary"></ion-icon>
+      <ion-segment-button icon-start clear small value="historico">
+        <ion-icon name="checkmark-circle-outline" icon-start clear small id="realizada" color="secondary"> Realizadas</ion-icon>
       </ion-segment-button>
     </ion-segment>
   </ion-toolbar>
 
 </ion-header>
 
-<ion-content padding>
+<ion-content padding [ngSwitch]="tarefas">
 
   <ion-refresher (ionRefresh)="doRefresh($event)">
-    <ion-refresher-content></ion-refresher-content>
+    <ion-refresher-content>Carregando</ion-refresher-content>
   </ion-refresher>
 
 
-  <div [ngSwitch]="tarefas">
-    <ion-list *ngSwitchCase="'geral'">
-      <ion-item *ngFor="let item of itens">
-        <ion-card>
+  <ion-list *ngSwitchCase="'geral'">
+    <ion-card *ngFor="let item of itens">
 
-          <ion-item *ngIf="item.realizada == 1 && item.favorito == 1">
-            <h2 align="center">
-              <font color="green">{{item.nome}}</font>
-            </h2>
-            <p>Dia: {{item.data}}</p>
-            <p>Horário: {{item.horario}}</p>
-            <ion-icon name="checkmark-circle-outline" color="secondary"></ion-icon>
-            <ion-icon id="favorito" name="star"></ion-icon>
-          </ion-item>
-
-          <ion-item *ngIf="item.realizada == 1 && item.favorito != 1">
-            <h2 align="center">
-              <font color="green">{{item.nome}}</font>
-            </h2>
-            <p>Dia: {{item.data}}</p>
-            <p>Horário: {{item.horario}}</p>
-            <ion-icon name="checkmark-circle-outline" color="secondary"></ion-icon>
-          </ion-item>
-
-          <ion-item *ngIf="item.favorito == 1 && item.realizada != 1">
-            <h2 align="center">
-              <font color="green">{{item.nome}}</font>
-            </h2>
-            <p>Dia: {{item.data}}</p>
-            <p>Horário: {{item.horario}}</p>
-            <ion-icon name="star" id="favorito"></ion-icon>
-          </ion-item>
-          
-          <ion-item *ngIf="item.realizada != 1 && item.favorito != 1">
-            <h2 align="center">
-              <font color="green">{{item.nome}}</font>
-            </h2>
-            <p>Dia: {{item.data}}</p>
-            <p>Horário: {{item.horario}}</p>
-          </ion-item>
-          <ion-row>
-            <ion-col>
-              <button ion-button icon-start clear small color="danger" (click)="showConfirmAlert(item)">
-                <ion-icon name="trash"></ion-icon>
-                <div>Deletar</div>
-              </button>
-            </ion-col>
-          </ion-row>
-          <button ion-button block (click)="abrirParaVisualizarEditar(item)">Detalhes</button>
-        </ion-card>
+      <ion-item *ngIf="item.realizada == 1 && item.favorito == 1">
+        <h2 align="center">
+          <font color="green">{{item.nome}}</font>
+        </h2>
+        <p>Dia: {{item.data}}</p>
+        <p>Horário: {{item.horario}}</p>
+        <ion-icon name="checkmark-circle-outline" color="secondary"></ion-icon>
+        <ion-icon id="favorito" name="star"></ion-icon>
       </ion-item>
-    </ion-list>
 
-    <ion-list *ngSwitchCase="'favoritos'">
-      <ion-item *ngFor="let item of itensFavoritos">
-        <ion-card>
+      <ion-item *ngIf="item.realizada == 1 && item.favorito != 1">
+        <h2 align="center">
+          <font color="green">{{item.nome}}</font>
+        </h2>
+        <p>Dia: {{item.data}}</p>
+        <p>Horário: {{item.horario}}</p>
+        <ion-icon name="checkmark-circle-outline" color="secondary"></ion-icon>
+      </ion-item>
 
-          <ion-item>
-            <h2 align="center">
-              <font color="green">{{item.nome}}</font>
-            </h2>
-            <p>Dia: {{item.data}}</p>
-            <p>Horário: {{item.horario}}</p>
-          </ion-item>
-          <!-- <ion-card-content>
+      <ion-item *ngIf="item.favorito == 1 && item.realizada != 1">
+        <h2 align="center">
+          <font color="green">{{item.nome}}</font>
+        </h2>
+        <p>Dia: {{item.data}}</p>
+        <p>Horário: {{item.horario}}</p>
+        <ion-icon name="star" id="favorito"></ion-icon>
+      </ion-item>
+
+      <ion-item *ngIf="item.realizada != 1 && item.favorito != 1">
+        <h2 align="center">
+          <font color="green">{{item.nome}}</font>
+        </h2>
+        <p>Dia: {{item.data}}</p>
+        <p>Horário: {{item.horario}}</p>
+      </ion-item>
+      <ion-row>
+        <ion-col>
+          <button ion-button icon-start clear small color="danger" (click)="showConfirmAlert(item)">
+            <ion-icon name="trash"></ion-icon>
+            <div>Deletar</div>
+          </button>
+        </ion-col>
+      </ion-row>
+      <button ion-button block (click)="abrirParaVisualizarEditar(item)">Detalhes</button>
+    </ion-card>
+  </ion-list>
+
+  <ion-list *ngSwitchCase="'favoritos'">
+    <ion-item *ngFor="let item of itensFavoritos">
+      <ion-card>
+
+        <ion-item>
+          <h2 align="center">
+            <font color="green">{{item.nome}}</font>
+          </h2>
+          <p>Dia: {{item.data}}</p>
+          <p>Horário: {{item.horario}}</p>
+        </ion-item>
+        <!-- <ion-card-content>
             <p>ssssss</p>
           </ion-card-content> -->
-          <ion-row>
-            <ion-col>
-              <button ion-button icon-start clear small color="danger" (click)="showConfirmAlert(item)">
-                <ion-icon name="trash"></ion-icon>
-                <div>Deletar</div>
-              </button>
-            </ion-col>
-          </ion-row>
-          <button ion-button block (click)="abrirParaVisualizarEditar(item)">Detalhes</button>
-        </ion-card>
-      </ion-item>
-    </ion-list>
+        <ion-row>
+          <ion-col>
+            <button ion-button icon-start clear small color="danger" (click)="showConfirmAlert(item)">
+              <ion-icon name="trash"></ion-icon>
+              <div>Deletar</div>
+            </button>
+          </ion-col>
+        </ion-row>
+        <button ion-button block (click)="abrirParaVisualizarEditar(item)">Detalhes</button>
+      </ion-card>
+    </ion-item>
+  </ion-list>
 
-    <ion-list *ngSwitchCase="'historico'">
-      <ion-item *ngFor="let item of itensRealizados">
-        <ion-card>
+  <ion-list *ngSwitchCase="'historico'">
+    <ion-item *ngFor="let item of itensRealizados">
+      <ion-card>
 
-          <ion-item>
-            <h2 align="center">
-              <font color="green">{{item.nome}}</font>
-            </h2>
-            <p>Dia: {{item.data}}</p>
-            <p>Horário: {{item.horario}}</p>
-          </ion-item>
-          <!-- <ion-card-content>
+        <ion-item>
+          <h2 align="center">
+            <font color="green">{{item.nome}}</font>
+          </h2>
+          <p>Dia: {{item.data}}</p>
+          <p>Horário: {{item.horario}}</p>
+        </ion-item>
+        <!-- <ion-card-content>
             <p>ssssss</p>
           </ion-card-content> -->
-          <ion-row>
-            <ion-col>
-              <button ion-button icon-start clear small color="danger" (click)="showConfirmAlert(item)">
-                <ion-icon name="trash"></ion-icon>
-                <div>Deletar</div>
-              </button>
-            </ion-col>
-          </ion-row>
-          <button ion-button block (click)="abrirParaVisualizarEditar(item)">Detalhes</button>
-        </ion-card>
-      </ion-item>
-    </ion-list>
-  </div>
-
+        <ion-row>
+          <ion-col>
+            <button ion-button icon-start clear small color="danger" (click)="showConfirmAlert(item)">
+              <ion-icon name="trash"></ion-icon>
+              <div>Deletar</div>
+            </button>
+          </ion-col>
+        </ion-row>
+        <button ion-button block (click)="abrirParaVisualizarEditar(item)">Detalhes</button>
+      </ion-card>
+    </ion-item>
+  </ion-list>
 </ion-content>

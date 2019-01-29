@@ -1,4 +1,3 @@
-import { MbscModule } from '@mobiscroll/angular';
 import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
@@ -9,7 +8,6 @@ import { VisualizarEditarTarefaPage } from './visualizar-editar-tarefa';
     VisualizarEditarTarefaPage,
   ],
   imports: [ 
-    MbscModule, 
     FormsModule, 
     IonicPageModule.forChild(VisualizarEditarTarefaPage),
   ],
